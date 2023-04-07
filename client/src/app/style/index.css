@@ -1,0 +1,11 @@
+html, body {
+    transition: background-color .3s ease;
+}
+
+html[theme="dark"] html, html[theme="dark"] body {
+    background: rgb(23, 23, 23);
+}
+
+html[theme="light"] html, html[theme="light"] body {
+    background: rgb(244, 244, 244);
+}
