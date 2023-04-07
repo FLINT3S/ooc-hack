@@ -9,13 +9,17 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AuthView: typeof import('./src/components/pages/AuthView.vue')['default']
     EmptyLayout: typeof import('./src/components/layout/EmptyLayout.vue')['default']
     HomeView: typeof import('./src/components/pages/HomeView.vue')['default']
-    LoginView: typeof import('./src/components/pages/LoginView.vue')['default']
     MainLayout: typeof import('./src/components/layout/MainLayout.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NCard: typeof import('naive-ui')['NCard']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
+    NForm: typeof import('naive-ui')['NForm']
+    NFormItem: typeof import('naive-ui')['NFormItem']
+    NInput: typeof import('naive-ui')['NInput']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

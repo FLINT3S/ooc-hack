@@ -11,6 +11,6 @@ export const routes: RouteRecordRaw[] = [
     },
     {
         path: '/login',
-        component: () => import("@pages/LoginView.vue")
+        component: () => import("@pages/AuthView.vue")
     }
 ]

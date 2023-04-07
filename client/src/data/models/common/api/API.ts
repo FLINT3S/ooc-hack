@@ -1,5 +1,5 @@
 import {BaseModel} from "../BaseModel"
-import {apiInstance} from "@/app/api/api";
+import {strapiApi} from "@/app/api/api";
 
 type method = "all" | "create" | "update" | "delete" | "getAll" | "getById"
 
@@ -19,7 +19,7 @@ export class API<T extends BaseModel> {
             return Promise.reject(new Error("Method getById are not available"))
         }
 
-        return (await apiInstance.get(`${this.path}/${id}`)).data
+        return (await strapiApi.get(`${this.path}/${id}`)).data
     }
 
     async getAll(options: any = {}) {
@@ -27,7 +27,7 @@ export class API<T extends BaseModel> {
             return Promise.reject(new Error("Method getAll are not available"))
         }
 
-        return (await apiInstance.get(this.path)).data
+        return (await strapiApi.get(this.path)).data
     }
 
     async create(data: T) {
@@ -38,7 +38,7 @@ export class API<T extends BaseModel> {
         const _t = data.json
         delete _t.id
 
-        return (await apiInstance.post(this.path, {data: _t})).data
+        return (await strapiApi.post(this.path, {data: _t})).data
     }
 
     async update(data: T) {
@@ -46,7 +46,7 @@ export class API<T extends BaseModel> {
             return Promise.reject(new Error("Method update are not available"))
         }
 
-        return (await apiInstance.put(`${this.path}/${data.id}`, data.json)).data
+        return (await strapiApi.put(`${this.path}/${data.id}`, data.json)).data
     }
 
     async delete(id: T["id"]) {
@@ -54,10 +54,10 @@ export class API<T extends BaseModel> {
             return Promise.reject(new Error("Method delete are not available"))
         }
 
-        return (await apiInstance.delete(this.path + "/delete/" + id)).data
+        return (await strapiApi.delete(this.path + "/delete/" + id)).data
     }
 
     async reorder(id: string, newOrder: number) {
-        return (await apiInstance.post(this.path + "/reorder", {id, newOrder})).data
+        return (await strapiApi.post(this.path + "/reorder", {id, newOrder})).data
     }
 }
