@@ -3,9 +3,18 @@ version: "3.9"
 services:
   strapi-service:
     container_name: strapi-service
-    image: siailyadev/ooc-hack-strapi-service:0.0.1
+    build:
+      context: service
+      dockerfile: dev.Dockerfile
     env_file:
       - service/.env
+    volumes:
+      - ./service/config:/opt/app/config
+      - ./service/src:/opt/app/src
+      - ./service/package.json:/opt/package.json
+      - ./service/yarn.lock:/opt/yarn.lock
+      - ./service/.env:/opt/app/.env
+      - ./service/public/uploads:/opt/app/public/uploads
     ports:
       - '1337:1337'
     depends_on:
