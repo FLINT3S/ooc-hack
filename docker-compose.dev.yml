@@ -40,6 +40,18 @@ services:
     ports:
       - '5432:5432'
 
+  server:
+    container_name: server
+    image: philipoff/ooc-hack-server:latest
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      - CONNECTION_STRING
+      - SECRET_KEY
+    depends_on:
+      - strapi-service
+
 
 volumes:
   strapi-data:
