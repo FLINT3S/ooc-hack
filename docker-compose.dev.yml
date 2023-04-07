@@ -4,20 +4,8 @@ services:
   strapi-service:
     container_name: strapi-service
     image: siailyadev/ooc-hack-strapi-service:0.0.1
-    environment:
-      HOST:
-      PORT:
-      APP_KEYS:
-      API_TOKEN_SALT:
-      ADMIN_JWT_SECRET:
-      TRANSFER_TOKEN_SALT:
-      DATABASE_CLIENT:
-      DATABASE_HOST:
-      DATABASE_PORT:
-      DATABASE_NAME:
-      DATABASE_USERNAME:
-      DATABASE_PASSWORD:
-      DATABASE_SSL:
+    env_file:
+      - service/.env
     ports:
       - '1337:1337'
     depends_on:
@@ -27,10 +15,8 @@ services:
     container_name: strapi-database
     restart: unless-stopped
     image: postgres:14-alpine3.17
-    environment:
-      POSTGRES_USER:
-      POSTGRES_PASSWORD:
-      POSTGRES_DB:
+    env_file:
+      - service/.env
     volumes:
       - strapi-data:/var/lib/postgresql/data/
     ports:

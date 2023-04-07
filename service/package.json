@@ -1,0 +1,30 @@
+{
+  "name": "ooc-heck-strapi-service",
+  "private": true,
+  "version": "0.0.1",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@strapi/strapi": "4.9.0",
+    "@strapi/plugin-users-permissions": "4.9.0",
+    "@strapi/plugin-i18n": "4.9.0",
+    "pg": "8.8.0"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "7dc4c84c-f5e3-49f9-9eea-5ccd23deda35"
+  },
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
