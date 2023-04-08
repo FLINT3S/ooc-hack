@@ -9,7 +9,7 @@
                 <n-dialog-provider>
                     <n-message-provider>
                         <router-view v-slot="{ Component }">
-                            <transition mode="out-in" name="fade">
+                            <transition mode="out-in" :name="transitionName">
                                 <component :is="Component"/>
                             </transition>
                         </router-view>
@@ -34,6 +34,10 @@ root.initTheme()
 
 const layout = computed(() => {
     return route.meta?.layout as Component ?? EmptyLayout
+})
+
+const transitionName = computed(() => {
+    return layout === EmptyLayout ? '' : 'fade'
 })
 
 const appTheme = computed(() => {

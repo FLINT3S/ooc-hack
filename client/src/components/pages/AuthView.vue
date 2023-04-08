@@ -5,13 +5,10 @@
             <div class="p-3 login-content d-flex flex-column">
                 <div class="d-flex justify-content-center">
                     <img alt="" src="@/assets/images/gin-logo.svg">
-                    <div class="text-center lh-1 ms-3">
+                    <div class="text-center my-auto lh-1 ms-3">
                         <h1 class="app-title my-0">
-                            Государственная инспекция
-                            <br>
-                            по недвижимости
+                            ГИН Ассистент
                         </h1>
-                        <h3 class="my-0 fw-light">Цифровой помощник</h3>
                     </div>
                 </div>
 
@@ -19,6 +16,7 @@
                         :model="loginData"
                         :rules="loginFormRules"
                         class="my-auto"
+                        ref="loginFormRef"
                 >
                     <n-form-item
                             label="Доменный email"
@@ -43,15 +41,20 @@
                         />
                     </n-form-item>
 
-                    <n-button
-                            :disabled="isLoginDisabled"
-                            :loading="loading"
-                            block
-                            class="mt-3"
-                            @click="onClickSubmitLogin"
+                    <n-form-item
+                        :feedback="loginError"
+                        validation-status="error"
                     >
-                        Войти
-                    </n-button>
+                        <n-button
+                                :disabled="isLoginDisabled"
+                                :loading="loading"
+                                block
+                                class="mt-3"
+                                @click="onClickSubmitLogin"
+                        >
+                            Войти
+                        </n-button>
+                    </n-form-item>
                 </n-form>
             </div>
         </n-card>
@@ -59,13 +62,14 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, reactive} from "vue";
+import {computed, reactive, ref} from "vue";
 import {serverApi} from "@/app/api/api";
 import {type FormItemRule, useMessage} from "naive-ui"
 import {useSetLoadingGlobal} from "@data/hooks/useSetLoading";
 import {validateEmail} from "@data/utils/emailValidate";
 
 const message = useMessage()
+const loginFormRef = ref()
 
 const loginData = reactive({
     email: '',
@@ -78,10 +82,10 @@ const loginFormRules = {
         trigger: 'blur',
         validator (rule: FormItemRule, value: string) {
             if (!value) {
-                return new Error('Обязательное поле!')
+                return new Error('Обязательное поле')
             }
             if (!validateEmail(value)) {
-              return new Error('Введите корректную почту!')
+              return new Error('Введите корректную почту')
             }
             return true
           },
@@ -94,9 +98,10 @@ const loginFormRules = {
 }
 
 const {loading, withLoading} = useSetLoadingGlobal()
+const loginError = ref("")
 
 const isLoginDisabled = computed(() => {
-    return !(loginData.email && loginData.password)
+    return !(loginData.email && loginData.password && validateEmail(loginData.email))
 })
 
 const onClickSubmitLogin = () => {
@@ -107,11 +112,10 @@ const onClickSubmitLogin = () => {
         .catch((e) => {
             onRejectLogin(e.message)
         })
-        .finally(() => {
-        })
 }
 
 const onRejectLogin = (error: string) => {
+    loginError.value = error
     message.error(`Ошибка логина! ${error}`)
 }
 </script>
