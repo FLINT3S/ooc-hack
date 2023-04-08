@@ -11,7 +11,6 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ArrowRightIcon: typeof import('./src/components/ui/icons/ArrowRightIcon.vue')['default']
     AuthView: typeof import('./src/components/pages/AuthView.vue')['default']
-    DasboardNumber: typeof import('./src/components/ui/widgets/DashboardNumber.vue')['default']
     DashboardNumber: typeof import('./src/components/ui/widgets/DashboardNumber.vue')['default']
     DropdownIcon: typeof import('./src/components/ui/icons/DropdownIcon.vue')['default']
     EmptyLayout: typeof import('./src/components/layout/EmptyLayout.vue')['default']
@@ -42,7 +41,6 @@ declare module '@vue/runtime-core' {
     NPopselect: typeof import('naive-ui')['NPopselect']
     NScrollbar: typeof import('naive-ui')['NScrollbar']
     NSelect: typeof import('naive-ui')['NSelect']
-    NSwitch: typeof import('naive-ui')['NSwitch']
     NThing: typeof import('naive-ui')['NThing']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -50,7 +48,6 @@ declare module '@vue/runtime-core' {
     SearchPanel: typeof import('./src/components/ui/search/SearchPanel.vue')['default']
     SearchPanelFilters: typeof import('./src/components/ui/search/SearchPanelFilters.vue')['default']
     SearchPanelInput: typeof import('./src/components/ui/search/SearchPanelInput.vue')['default']
-    SearchPlaceholder: typeof import('./src/components/ui/icons/SearchPlaceholderIcon.vue')['default']
     SearchPlaceholderIcon: typeof import('./src/components/ui/icons/SearchPlaceholderIcon.vue')['default']
     SettingsIcon: typeof import('./src/components/ui/icons/SettingsIcon.vue')['default']
     UpcomingEvents: typeof import('./src/components/ui/widgets/UpcomingEvents.vue')['default']

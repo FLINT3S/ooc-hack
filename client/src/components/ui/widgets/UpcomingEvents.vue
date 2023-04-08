@@ -8,7 +8,7 @@
                 </router-link>
 
                 <div style="font-size: 14px">
-                    <n-popselect v-model:value="(upcomingEventsMode as string)" :options="options" trigger="click">
+                    <n-popselect v-model:value="upcomingEventsMode" :options="options" trigger="click">
                         <div class="d-flex align-items-center cursor-pointer">
                             <span class="text-accent">
                                 {{ upcomingEventsModeLabel }}
@@ -22,7 +22,7 @@
         </template>
 
         <n-data-table>
-            
+
         </n-data-table>
     </n-card>
 </template>
@@ -30,6 +30,7 @@
 <script lang="ts" setup>
 import DropdownIcon from "@components/ui/icons/DropdownIcon.vue";
 import ArrowRightIcon from "@components/ui/icons/ArrowRightIcon.vue";
+import {type Ref, ref} from "vue"
 
 const options = [
     {
@@ -42,7 +43,7 @@ const options = [
     }
 ]
 
-const upcomingEventsMode: Ref<string> = ref('realty')
+const upcomingEventsMode: Ref<string> = ref<string>('realty')
 
 const upcomingEventsModeLabel = computed(() => {
     return options.find(o => o.value === upcomingEventsMode.value)!.label

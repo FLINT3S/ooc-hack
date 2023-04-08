@@ -44,6 +44,6 @@ interface Props {
 const props = defineProps<Props>()
 
 const searchType = computed(() => {
-    return options.find((o) => o.value === props.searchData.searchType)
+    return options.find((o) => o.value === props.searchData.searchType)!
 })
 </script>
