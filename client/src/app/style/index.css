@@ -39,3 +39,24 @@ html[theme="light"] html, html[theme="light"] body {
 .header-icon:focus {
     outline: none;
 }
+
+.text-accent {
+    color: var(--accent-red)
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-primary {
+    color: var(--text-primary) !important
+}
+
+.underline-hover-link {
+    text-decoration: none;
+}
+
+.underline-hover-link:hover {
+    text-decoration: underline var(--accent-red);
+    text-underline-offset: 4px;
+}
