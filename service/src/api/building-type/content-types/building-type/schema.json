@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "building_types",
+  "info": {
+    "singularName": "building-type",
+    "pluralName": "building-types",
+    "displayName": "BuildingType"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

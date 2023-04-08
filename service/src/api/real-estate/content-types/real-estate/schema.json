@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "real_estates",
+  "info": {
+    "singularName": "real-estate",
+    "pluralName": "real-estates",
+    "displayName": "RealEstate",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "federalDistrict": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "objectState": {
+      "type": "string"
+    },
+    "area": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "text"
+    },
+    "actualUser": {
+      "type": "text"
+    },
+    "attachments": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "additionalFields": {
+      "type": "json"
+    },
+    "buildingType": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::building-type.building-type"
+    }
+  }
+}
