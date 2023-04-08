@@ -1,9 +1,8 @@
-import asyncio
 import os
+
 from strapi_client import StrapiClient
 
 from server.src.services.strapi.models import User
-
 
 strapi_url = os.environ['STRAPI_URL']
 login = os.environ['STRAPI_LOGIN']
