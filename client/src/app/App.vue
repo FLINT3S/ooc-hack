@@ -4,19 +4,19 @@
             :locale="ruRU"
             :theme="appTheme"
     >
-        <transition mode="out-in" name="fade">
-            <component :is="layout">
-                <n-dialog-provider>
-                    <n-message-provider>
+        <n-dialog-provider>
+            <n-message-provider>
+                <transition mode="out-in" name="fade">
+                    <component :is="layout">
                         <router-view v-slot="{ Component }">
-                            <transition mode="out-in" :name="transitionName">
+                            <transition :name="transitionName" mode="out-in">
                                 <component :is="Component"/>
                             </transition>
                         </router-view>
-                    </n-message-provider>
-                </n-dialog-provider>
-            </component>
-        </transition>
+                    </component>
+                </transition>
+            </n-message-provider>
+        </n-dialog-provider>
     </n-config-provider>
 </template>
 
@@ -37,7 +37,7 @@ const layout = computed(() => {
 })
 
 const transitionName = computed(() => {
-    return layout === EmptyLayout ? '' : 'fade'
+    return layout.value === EmptyLayout ? '' : 'fade'
 })
 
 const appTheme = computed(() => {

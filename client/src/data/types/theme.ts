@@ -1,0 +1,1 @@
+export type ColorAppTheme = 'light' | 'dark'

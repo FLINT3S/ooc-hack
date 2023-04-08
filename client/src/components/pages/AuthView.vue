@@ -139,7 +139,7 @@ const onRejectLogin = (error: string) => {
 }
 
 .app-title {
-    color: #B91827;
+    color: var(--accent-red);
     font-size: 18px;
 }
 </style>
