@@ -8,6 +8,7 @@
 
 html, body {
     transition: background-color .3s ease;
+    color: var(--text-primary);
 }
 
 html[theme="dark"] html, html[theme="dark"] body {
@@ -16,4 +17,46 @@ html[theme="dark"] html, html[theme="dark"] body {
 
 html[theme="light"] html, html[theme="light"] body {
     background: rgb(244, 244, 244);
+}
+
+:root {
+    --accent-red: #B91827;
+    --text-primary: #262626;
+    --text-secondary: #7A7A7A;
+    --text-tethritary: #A6A6A6;
+}
+
+.header-icon {
+    color: var(--text-tethritary);
+    transition: color .3s ease;
+}
+
+.header-icon:hover {
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.header-icon:focus {
+    outline: none;
+}
+
+.text-accent {
+    color: var(--accent-red)
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.text-primary {
+    color: var(--text-primary) !important
+}
+
+.underline-hover-link {
+    text-decoration: none;
+}
+
+.underline-hover-link:hover {
+    text-decoration: underline var(--accent-red);
+    text-underline-offset: 4px;
 }

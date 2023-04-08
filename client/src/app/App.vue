@@ -3,27 +3,31 @@
             :date-locale="dateRuRU"
             :locale="ruRU"
             :theme="appTheme"
+            :theme-overrides="themeOverrides"
     >
-        <transition mode="out-in" name="fade">
-            <component :is="layout">
-                <n-dialog-provider>
-                    <n-message-provider>
-                        <router-view v-slot="{ Component }">
-                            <transition mode="out-in" name="fade">
-                                <component :is="Component"/>
-                            </transition>
-                        </router-view>
-                    </n-message-provider>
-                </n-dialog-provider>
-            </component>
-        </transition>
+        <n-theme-editor>
+            <n-dialog-provider>
+                <n-message-provider>
+                    <transition mode="out-in" name="fade">
+                        <component :is="layout">
+                            <router-view v-slot="{ Component }">
+                                <transition :name="transitionName" mode="out-in">
+                                    <component :is="Component"/>
+                                </transition>
+                            </router-view>
+                        </component>
+                    </transition>
+                </n-message-provider>
+            </n-dialog-provider>
+        </n-theme-editor>
     </n-config-provider>
 </template>
 
 <script lang="ts" setup>
 import {type Component, computed} from "vue";
 import {useRoute} from "vue-router";
-import {darkTheme, dateRuRU, lightTheme, ruRU} from "naive-ui";
+import {darkTheme, dateRuRU, lightTheme, ruRU, NThemeEditor} from "naive-ui";
+import themeOverrides from "@/app/style/naive-ui-theme-overrides.json"
 
 import EmptyLayout from "@components/layout/EmptyLayout.vue";
 import {useRootStore} from "@data/store/rootStore";
@@ -34,6 +38,10 @@ root.initTheme()
 
 const layout = computed(() => {
     return route.meta?.layout as Component ?? EmptyLayout
+})
+
+const transitionName = computed(() => {
+    return layout.value === EmptyLayout ? '' : 'fade'
 })
 
 const appTheme = computed(() => {

@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tasks",
+  "info": {
+    "singularName": "task",
+    "pluralName": "tasks",
+    "displayName": "Task",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "description": {
+      "type": "richtext"
+    },
+    "deadline": {
+      "type": "datetime"
+    },
+    "assignee": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::client.client"
+    },
+    "creator": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::client.client"
+    },
+    "realEstate": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::real-estate.real-estate"
+    },
+    "meetings": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::meeting.meeting",
+      "mappedBy": "tasks"
+    },
+    "workGroup": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::work-group.work-group"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notifications",
+  "info": {
+    "singularName": "notification",
+    "pluralName": "notifications",
+    "displayName": "Notification"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "workGroup": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::work-group.work-group"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "text": {
+      "type": "richtext"
+    },
+    "date": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}
