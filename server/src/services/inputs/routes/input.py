@@ -1,5 +1,3 @@
-import json
-
 import xmltodict
 from fastapi import APIRouter, UploadFile, File
 from typing import Annotated
