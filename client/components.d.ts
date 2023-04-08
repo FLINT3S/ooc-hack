@@ -25,6 +25,7 @@ declare module '@vue/runtime-core' {
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NDataTable: typeof import('naive-ui')['NDataTable']
     NDialogProvider: typeof import('naive-ui')['NDialogProvider']
+    NDivider: typeof import('naive-ui')['NDivider']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NInput: typeof import('naive-ui')['NInput']
@@ -41,6 +42,7 @@ declare module '@vue/runtime-core' {
     NScrollbar: typeof import('naive-ui')['NScrollbar']
     NSelect: typeof import('naive-ui')['NSelect']
     NThing: typeof import('naive-ui')['NThing']
+    RealtyRegistryView: typeof import('./src/components/pages/RealtyRegistryView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SearchAdvancedFilters: typeof import('./src/components/ui/search/SearchAdvancedFilters.vue')['default']
@@ -49,6 +51,7 @@ declare module '@vue/runtime-core' {
     SearchPanelInput: typeof import('./src/components/ui/search/SearchPanelInput.vue')['default']
     SearchPlaceholderIcon: typeof import('./src/components/ui/icons/SearchPlaceholderIcon.vue')['default']
     SettingsIcon: typeof import('./src/components/ui/icons/SettingsIcon.vue')['default']
+    TasksRegistryView: typeof import('./src/components/pages/TasksRegistryView.vue')['default']
     UpcomingEvents: typeof import('./src/components/ui/widgets/UpcomingEvents.vue')['default']
     UserIcon: typeof import('./src/components/ui/icons/UserIcon.vue')['default']
   }
