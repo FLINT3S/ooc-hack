@@ -2,6 +2,7 @@ from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .objects.routes import dormitories_router
+from xlsx.routes.index import xlsx_router
 
 
 class APIService:
@@ -28,4 +29,5 @@ class APIService:
         api_router.prefix = "/api"
 
         api_router.include_router(router=dormitories_router, prefix="/index", tags=["Index"])
+        api_router.include_router(router=xlsx_router, prefix="/xlsx", tags=["xlsx"])
         self.app.include_router(router=api_router)
