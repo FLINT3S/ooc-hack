@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meetings",
+  "info": {
+    "singularName": "meeting",
+    "pluralName": "meetings",
+    "displayName": "Meeting"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "date": {
+      "type": "datetime",
+      "required": true
+    },
+    "tasks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::task.task",
+      "inversedBy": "meetings"
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

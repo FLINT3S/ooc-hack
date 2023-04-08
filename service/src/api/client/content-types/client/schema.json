@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "clients",
+  "info": {
+    "singularName": "client",
+    "pluralName": "clients",
+    "displayName": "Client",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "passwordHash": {
+      "type": "string"
+    },
+    "telegramId": {
+      "type": "biginteger"
+    },
+    "role": {
+      "type": "enumeration",
+      "enum": [
+        "admin"
+      ]
+    },
+    "email": {
+      "type": "email"
+    },
+    "apiKey": {
+      "type": "text"
+    },
+    "workGroups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::work-group.work-group",
+      "mappedBy": "clients"
+    }
+  }
+}
