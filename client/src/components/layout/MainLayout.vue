@@ -16,7 +16,7 @@
                         <HomeWorkOutlined width="24"/>
                     </header-navigation-item>
 
-                    <header-navigation-item title="Решения" to="/decisions">
+                    <header-navigation-item title="Решения" to="/tasks">
                         <NotesRound width="24"/>
                     </header-navigation-item>
 
@@ -35,10 +35,8 @@
 
         <n-scrollbar style="height: calc(100vh - 52px)">
             <n-layout-content style="height: 100%">
-                <main class="container pt-3 pb-2" style="height: calc(100vh - 107px)">
-                    <n-button @click="onClickThemeChange">
-                        theme
-                    </n-button>
+                <main>
+                    <slot></slot>
                 </main>
             </n-layout-content>
 
