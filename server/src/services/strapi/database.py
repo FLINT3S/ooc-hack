@@ -44,8 +44,8 @@ async def get_entity_id(collection, field, value):
 
 if __name__ == "__main__":
     # asyncio.run(create_entity(collection="tests", data={"test": "vasya_loh"}))
-    test_object = asyncio.run(get_entity(collection="tests", field="test", value="vasya_loh"))
+    test_object = asyncio.run(get_entity(collection="clients", field="login", value="MindlessDoc"))
     print(test_object)
-    object_id = asyncio.run(get_entity_id(collection="tests", field="test", value="vasya_loh"))
-    if object_id:
-        asyncio.run(update_entity(collection="tests", object_id=object_id, data={"test": "aaaaaa"}))
+    # object_id = asyncio.run(get_entity_id(collection="tests", field="test", value="vasya_loh"))
+    # if object_id:
+    #     asyncio.run(update_entity(collection="tests", object_id=object_id, data={"test": "aaaaaa"}))
