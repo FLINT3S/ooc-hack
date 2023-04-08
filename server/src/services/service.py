@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .objects.routes import dormitories_router
 from .objects.routes import auth_router
 from .inputs.routes import input_router
+from .objects.routes import geo_router
 
 
 class APIService:
@@ -30,6 +31,7 @@ class APIService:
         api_router.prefix = "/api"
 
         api_router.include_router(router=dormitories_router, prefix="/index", tags=["Index"])
-        api_router.include_router(router=auth_router, prefix="/auth", tags=["Index"])
+        api_router.include_router(router=auth_router, prefix="/auth", tags=["Auth"])
         api_router.include_router(router=input_router, prefix="/input", tags=["Input"])
+        api_router.include_router(router=geo_router, prefix="/geo", tags=["Geo"])
         self.app.include_router(router=api_router)
