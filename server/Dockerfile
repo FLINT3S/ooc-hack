@@ -9,8 +9,8 @@ COPY ./requirements.txt /code/requirements.txt
 RUN pip install -r /code/requirements.txt
 
 
-COPY . /code
+COPY . /code/server
 
 EXPOSE 3000
 
-CMD ["uvicorn", "src.main:api.app", "--host", "0.0.0.0", "--port", "3001", "--reload"]
+CMD ["uvicorn", "server.src.main:api.app", "--host", "0.0.0.0", "--port", "3001", "--reload"]

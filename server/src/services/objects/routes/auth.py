@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 
-from src.auth import Auth
-from src.services.objects.loginrest import LoginRest
-from src.services.strapi.database import get_entity
+from server.src.auth import Auth
+from server.src.services.objects.loginrest import LoginRest
+from server.src.services.strapi.database import get_entity
 
 auth_router = APIRouter()
 

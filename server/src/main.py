@@ -1,8 +1,8 @@
 from starlette.middleware.cors import CORSMiddleware
 
-from .services.service import APIService
-
 import uvicorn
+
+from server.src.services.service import APIService
 
 api = APIService()
 
