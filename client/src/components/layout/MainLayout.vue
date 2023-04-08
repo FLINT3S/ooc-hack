@@ -11,9 +11,17 @@
                     </div>
                 </div>
 
-                <menu class="m-0 p-0">
-                    <header-navigation-item title="Объекты" to="/registry">
+                <menu class="m-0 p-0 d-flex gap-3">
+                    <header-navigation-item title="Объекты" to="/realty">
                         <HomeWorkOutlined width="24"/>
+                    </header-navigation-item>
+
+                    <header-navigation-item title="Решения" to="/decisions">
+                        <NotesRound width="24"/>
+                    </header-navigation-item>
+
+                    <header-navigation-item title="Дашборд" to="/">
+                        <InsertChartOutlined width="24"/>
                     </header-navigation-item>
                 </menu>
 
@@ -50,7 +58,7 @@ import {useRootStore} from "@data/store/rootStore";
 import HeaderNavigationItem from "@components/ui/header/HeaderNavigationItem.vue";
 import HeaderNotificationsPopup from "@components/ui/header/HeaderNotificationsPopup.vue";
 import HeaderUserPopup from "@components/ui/header/HeaderUserPopup.vue";
-import {HomeWorkOutlined} from "@vicons/material"
+import {HomeWorkOutlined, InsertChartOutlined, NotesRound} from "@vicons/material"
 
 const root = useRootStore()
 
