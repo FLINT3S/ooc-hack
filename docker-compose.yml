@@ -12,7 +12,7 @@ services:
 
   strapi-service:
     container_name: strapi-service
-    image: siailyadev/ooc-hack-strapi-service:0.0.1
+    image: siailyadev/ooc-hack-strapi-service:0.0.2
     environment:
       HOST:
       PORT:
@@ -55,8 +55,9 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - CONNECTION_STRING
-      - SECRET_KEY
+      STRAPI_URL:
+      STRAPI_LOGIN:
+      STRAPI_PASSWORD:
     depends_on:
       - strapi-service
 
