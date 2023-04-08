@@ -1,7 +1,8 @@
 import asyncio
 import os
 from strapi_client import StrapiClient
-from models import User, RealEstateAttachment, RealEstate, Role, TaskAttachment, Task
+
+from server.src.services.strapi.models import User
 
 strapi_url = "https://2198-178-71-66-26.eu.ngrok.io/"
 login = "ooc-hack@flint3s.ru"
