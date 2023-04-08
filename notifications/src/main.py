@@ -14,8 +14,9 @@ app.add_middleware(
 )
 
 
-@app.get("/notification")
+@app.get("/notifications/new_notification")
 async def root():
+    print("notif))")
     return {"message": "Notif!"}
 
 
