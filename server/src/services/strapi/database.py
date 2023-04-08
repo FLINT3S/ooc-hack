@@ -4,14 +4,11 @@ from strapi_client import StrapiClient
 
 from server.src.services.strapi.models import User
 
-strapi_url = "https://2198-178-71-66-26.eu.ngrok.io/"
-login = "ooc-hack@flint3s.ru"
-password = "Sadness9-Judiciary-Fraternal"
 
+strapi_url = os.environ['STRAPI_URL']
+login = os.environ['STRAPI_LOGIN']
+password = os.environ['STRAPI_PASSWORD']
 
-# strapi_url = os.environ['STRAPI_URL']
-# login = os.environ['STRAPI_LOGIN']
-# password = os.environ['STRAPI_PASSWORD']
 
 async def update_entity(collection, object_id, data):
     strapi = StrapiClient(strapi_url)
@@ -34,7 +31,7 @@ async def get_entity(collection, field, value):
         if data:
             return data[0]
         return None
-    except Exception as e:
+    except Exception:
         return "Wrong collection or field"
 
 
@@ -56,9 +53,10 @@ async def get_user(email=None, id=None):
             # -----------------------------------
             return User(**data[0])
         return None
-    except Exception as e:
+    except Exception:
         print("Wrong collection or field")
         return None
+
 
 async def get_entity_id(collection, field, value):
     strapi = StrapiClient(strapi_url)
@@ -68,13 +66,3 @@ async def get_entity_id(collection, field, value):
     if data:
         return data[0]["id"]
     return None
-
-
-if __name__ == "__main__":
-    # asyncio.run(create_entity(collection="tests", data={"test": "vasya_loh"}))
-    test_user = asyncio.run(get_user(email="tv.kozlov.2002@gmail.com"))
-    print(test_user)
-    print(test_user.email)
-    # object_id = asyncio.run(get_entity_id(collection="tests", field="test", value="vasya_loh"))
-    # if object_id:
-    #     asyncio.run(update_entity(collection="tests", object_id=object_id, data={"test": "aaaaaa"}))
