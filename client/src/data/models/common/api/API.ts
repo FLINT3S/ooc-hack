@@ -56,7 +56,7 @@ export class API<T extends BaseModel> {
             return Promise.reject(new Error("Method delete are not available"))
         }
 
-        return (await strapiApi.delete(this.path + "/delete/" + id)).data
+        return (await strapiApi.delete(this.path + "/" + id)).data
     }
 
     async reorder(id: string, newOrder: number) {

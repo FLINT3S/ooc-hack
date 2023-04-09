@@ -117,6 +117,8 @@ import {Realty} from "@data/models/Realty"
 import {WorkGroup} from "@data/models/WorkGroup";
 import {BuildingType} from "@data/models/nested/BuildingType";
 
+const router = useRouter()
+const message = useMessage()
 const props = defineProps<{
     realtyItem: Realty,
     loading: boolean,
@@ -196,7 +198,10 @@ const onClickDeleteRealty = () => {
         positiveText: 'Удалить',
         negativeText: 'Отмена',
         onPositiveClick: () => {
-            props.realtyItem.delete()
+            props.realtyItem.delete().then(() => {
+                message.success('Объект удалён')
+                router.replace('/realty')
+            })
         }
     })
 }
