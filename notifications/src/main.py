@@ -48,7 +48,8 @@ async def root(data=Body()):
                         "text": f"Назначена встреча по теме [{task['attributes']['title']}]"
                                 f" {meeting_date.strftime('%d.%m.%y в %H:%M')}\n"
                                 f"Ссылка для подключения: {meeting_url}",
-                        "date": datetime.now().strftime('%d.%m.%y в %H:%M')
+                        "date": datetime.now().strftime('%d.%m.%y в %H:%M'),
+                        "sent": False
                     })
 
 
