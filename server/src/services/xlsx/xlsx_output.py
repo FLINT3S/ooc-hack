@@ -49,6 +49,7 @@ class XlsxWriter:
         for task in tasks:
             self._write_task(task)
             self._counter += 1
+        self._resize_columns()
 
     def _write_task(self, task: dict):
         self._worksheet.cell(self._counter, 1, self._counter - 1)
@@ -57,6 +58,21 @@ class XlsxWriter:
             if self._fields_involvement[getter_name]:
                 self._worksheet.cell(self._counter, column, self._value_getters[getter_name](task))
                 column += 1
+
+    def _resize_columns(self):
+        for col in self._worksheet.columns:
+            max_length = 0
+            column = col[0].column_letter
+            for cell in col:
+                if cell.coordinate in self._worksheet.merged_cells:
+                    continue
+                try:
+                    if len(str(cell.value)) > max_length:
+                        max_length = len(cell.value)
+                except:
+                    pass
+            adjusted_width = (max_length + 2) * 1.2
+            self._worksheet.column_dimensions[column].width = adjusted_width
 
     def save(self, path: str):
         self._wb.save(path)
