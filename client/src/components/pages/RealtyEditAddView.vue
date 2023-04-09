@@ -110,12 +110,17 @@ import {serverApi} from "@/app/api/api";
 
 const router = useRouter()
 const dialog = useDialog()
-const mode = router.currentRoute.value.path.includes('edit') ? 'edit' : 'add' as 'edit' | 'add'
+const message = useMessage()
+
+const mode = computed(() => {
+    return router.currentRoute.value.path.includes('edit') ? 'edit' : 'add' as 'edit' | 'add'
+})
+
 const view = ref('realty')
 const loading = ref(false)
 const realtyItem: Realty = reactive(new Realty()) as Realty
 
-if (mode === 'edit') {
+if (mode.value === 'edit') {
     realtyItem.id = parseInt(router.currentRoute.value.params.id as string) as number
     useSetLoading(realtyItem.load(), loading)
 }
@@ -188,17 +193,25 @@ const recognizeAddress = (mode: 'address' | 'coords') => {
 }
 
 const onClickSaveRealty = () => {
-    realtyItem.update().then(() => {
-        dialog.success({
-            title: 'Обновлено!',
-            content: 'Объект успешно обновлен! Вернуться в реестр или продолжить редактирование?',
-            positiveText: 'Вернуться в ресстр',
-            negativeText: 'Продолжить редактирование',
-            onPositiveClick: () => {
-                router.push('/realty')
-            }
+    if (mode.value === 'edit') {
+        realtyItem.update().then(() => {
+            dialog.success({
+                title: 'Обновлено!',
+                content: 'Объект успешно обновлен! Вернуться в реестр или продолжить редактирование?',
+                positiveText: 'Вернуться в ресстр',
+                negativeText: 'Продолжить редактирование',
+                onPositiveClick: () => {
+                    router.push('/realty')
+                }
+            })
         })
-    })
+    } else {
+        realtyItem.create().then((r) => {
+            console.log(r)
+            message.success("Объект создан")
+            router.replace('/realty/edit/' + r.id)
+        })
+    }
 }
 
 const isSaveBtnDisabled = computed(() => {
