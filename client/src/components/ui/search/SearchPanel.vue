@@ -9,17 +9,24 @@
 import SearchPanelInput from "@components/ui/search/SearchPanelInput.vue";
 import SearchPanelFilters from "@components/ui/search/SearchPanelFilters.vue";
 import {SearchDataType} from "@data/types/searchData";
+import qs from "qs";
+
+const router = useRouter()
 
 const searchData: SearchDataType = reactive({
-    searchQuery: '',
-    searchType: 'realty',
+    searchQuery: router.currentRoute.value?.query?.searchQuery as string || '',
+    searchType: router.currentRoute.value?.query?.searchType as string || '',
     filters: {
-        area: '',
-        district: ''
+        area: router.currentRoute.value?.query?.['filters[area]'] as string || '',
+        district: router.currentRoute.value?.query?.['filters[district]'] as string || ''
     }
 })
 
 const onClickSearch = () => {
-    console.log(searchData)
+    if (searchData.searchType === 'realty') {
+        router.push('/realty/list?' + qs.stringify(searchData))
+    } else {
+        router.push('/tasks/list?' + qs.stringify(searchData))
+    }
 }
 </script>
