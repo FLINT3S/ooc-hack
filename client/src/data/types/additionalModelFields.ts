@@ -1,4 +1,4 @@
-export type AdditionalRealtySection = {
+export type AdditionalModelSection = {
     fields: {
         type: string,
         value: any,
@@ -7,4 +7,4 @@ export type AdditionalRealtySection = {
     sectionTitle: string
 }
 
-export type AdditionalRealtyFields = AdditionalRealtySection[]
+export type AdditionalModelFields = AdditionalModelSection[]

@@ -69,14 +69,14 @@
 </template>
 
 <script lang="ts" setup>
-import {AdditionalRealtySection} from "@data/types/additionalRealtyFields";
+import {AdditionalModelSection} from "@data/types/additionalModelFields";
 import {makeSectionId} from "@data/utils/transliterate";
 
 const dialog = useDialog()
 const message = useMessage()
 
 const props = defineProps<{
-    section: AdditionalRealtySection
+    section: AdditionalModelSection
 }>()
 
 const fieldTypeOptions = [

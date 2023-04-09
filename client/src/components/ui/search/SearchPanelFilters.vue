@@ -32,7 +32,7 @@ const options = [
         value: 'realty'
     },
     {
-        label: 'поручениям',
+        label: 'решениям',
         value: 'tasks'
     }
 ]

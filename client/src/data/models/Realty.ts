@@ -1,7 +1,7 @@
 import {BaseModel} from "@data/models/common/BaseModel";
 import {Entity} from "@data/decorators/Entity";
 import {Column} from "@data/decorators/Column";
-import {AdditionalRealtyFields} from "@data/types/additionalRealtyFields";
+import {AdditionalModelFields} from "@data/types/additionalModelFields";
 import {API} from "@data/models/common/api/API";
 import {BuildingType} from "./nested/BuildingType";
 import {Task} from "@data/models/Task";
@@ -39,7 +39,7 @@ export class Realty extends BaseModel {
     actualUser!: string
 
     @Column()
-    additionalFields?: AdditionalRealtyFields = []
+    additionalFields?: AdditionalModelFields = []
 
     @Column({type: [Task]})
     tasks: Task[] = []
