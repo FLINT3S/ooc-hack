@@ -18,13 +18,14 @@ class XlsxWriter:
     }
     _value_getters = {
         "realtyAddress": lambda task: task["realEstate"]["address"],
-        "realtyType": lambda task: task["realEstate"]["buildingType"]["title"],
+        "realtyType": lambda task: task["realEstate"]["buildingType"]["title"] if task["realEstate"]["buildingType"] else None,
         "realtyOwner": lambda task: task["realEstate"]["owner"],
         "taskTitle": lambda task: task["title"],
         "taskDeadline": lambda task: task["deadline"],
         "taskStatus": lambda task: task["status"],
-        "taskAssignee": lambda task: f"{task['assignee']['name']} {task['assignee']['surname']}, "
-                                     f"{task['assignee']['email']}"
+        "taskAssignee": lambda task:
+            f"{task['assignee']['name']} {task['assignee']['surname']}, {task['assignee']['email']}" if task['assignee']
+            else None
     }
 
     def __init__(self, fields_involvement):
