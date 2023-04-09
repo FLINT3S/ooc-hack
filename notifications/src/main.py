@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from urllib.parse import unquote
 
 from .database import get_meeting, get_users_from_working_group, get_task, create_notification
+from notifications.src.telegram_bot.bot import bot
 
 app = FastAPI()
 
@@ -42,15 +43,18 @@ async def root(data=Body()):
             if task["attributes"]["workGroups"]["data"]:
                 for work_group in task["attributes"]["workGroups"]["data"]:
                     work_group = await get_users_from_working_group(work_group["id"])
+                    text = f"Назначена встреча по теме [{task['attributes']['title']}]" \
+                           f" {meeting_date.strftime('%d.%m.%y в %H:%M')}" \
+                           f"\nСсылка для подключения: {meeting_url}"
                     await create_notification({
                         "workGroup": work_group,
                         "title": "Новая встреча!",
-                        "text": f"Назначена встреча по теме [{task['attributes']['title']}]"
-                                f" {meeting_date.strftime('%d.%m.%y в %H:%M')}\n"
-                                f"Ссылка для подключения: {meeting_url}",
+                        "text": text,
                         "date": datetime.now().strftime('%d.%m.%y в %H:%M'),
-                        "sent": False
+                        "sent": True
                     })
+                    for client in work_group["attributes"]["clients"]["data"]: # Send message in Telegram
+                        await bot.send_message(client["attributes"]["telegramId"], text)
 
 
 if __name__ == "__main__":

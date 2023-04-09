@@ -56,6 +56,19 @@ async def get_task(id):
         return "Wrong collection or field"
 
 
+async def get_user(email):
+    strapi = StrapiClient(strapi_url)
+    await strapi.authorize(login, password)
+    try:
+        data = await strapi.get_entries("clients", filters={"email": {'$eq': email}}, populate='*')
+        data = data["data"]
+        if data:
+            return data[0]
+        return None
+    except Exception:
+        return "Wrong collection or field"
+
+
 async def get_users_from_working_group(id):
     strapi = StrapiClient(strapi_url)
     await strapi.authorize(login, password)
