@@ -112,6 +112,8 @@ async def get_real_estate_with_tasks(real_estate_id) -> dict:
                             object[attribute_key] = objects
                         elif isinstance(object[attribute_key]['data'], dict):
                             object[attribute_key] = object[attribute_key]['data']
+                        elif object[attribute_key]['data'] is None:
+                            object[attribute_key] = None
                     unwrap_attributes(object[attribute_key])
                 object.pop('attributes')
         elif isinstance(object, list):
