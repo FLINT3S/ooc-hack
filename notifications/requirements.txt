@@ -3,3 +3,5 @@ fastapi
 aiogram
 starlette
 uvicorn
+strapi-client
+python-dateutil

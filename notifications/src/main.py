@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
+import json
+import uvicorn
+
+import dateutil.parser
+from datetime import datetime
 from fastapi import FastAPI, Body
 from starlette.middleware.cors import CORSMiddleware
-
-import uvicorn
 from pydantic import BaseModel
-
 from urllib.parse import unquote
 
-import json
+from .database import get_meeting, get_users_from_working_group, get_task, create_notification
+
 
 app = FastAPI()
 
@@ -26,13 +29,28 @@ class Data(BaseModel):
 
 @app.post("/notifications/new_notification/")
 async def root(data = Body()):
-    print("фыафыа))123")
-    # print(data.json())
-    data = data.decode('utf-8')
-    data = (unquote(data))[8:]
-    print(json.loads(data))
-    # print(json.loads(data.decode('utf8')))
-    return {"message": "Notif!"}
+    data = data.decode('utf-8') # bytes to str
+    data = (unquote(data))[8:] # url string to string and slice key "payload="
+    data = json.loads(data) # str to json
+    print(data)
+    if data["model"] == "meeting" and data["event"] == "entry.create":  # Уведомление при создании новой встречи
+        meeting_info = await get_meeting(data["entry"]["id"])
+        print(meeting_info)
+        meeting_date = dateutil.parser.isoparse(meeting_info["attributes"]["date"])
+        meeting_url = dateutil.parser.isoparse(meeting_info["attributes"]["url"])
+        for task in meeting_info["attributes"]["tasks"]["data"]:
+            task =  await get_task(task["id"])
+            if task["attributes"]["workGroups"]["data"]:
+                for work_group in task["attributes"]["workGroups"]["data"]:
+                    work_group = await get_users_from_working_group(work_group["id"])
+                    await create_notification({
+                        "workGroup": work_group,
+                        "title": "Новая встреча!",
+                        "text": f"Назначена встреча по теме [{task['attributes']['title']}]"
+                                f" {meeting_date.strftime('%d.%m.%y в %H:%M')}"
+                                f"Ссылка для подключения: {meeting_url}",
+                        "date": datetime.now().strftime('%d.%m.%y в %H:%M')
+                    })
 
 
 if __name__ == "__main__":
