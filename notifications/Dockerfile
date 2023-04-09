@@ -13,6 +13,7 @@ COPY . /code/notifications
 
 EXPOSE 3002
 
-CMD ["uvicorn", "notifications.src.main:app", "--host", "0.0.0.0", "--port", "3002", "--reload"]
+#CMD ["python", "/code/notifications/src/telegram_bot/bot.py"]
+#CMD ["uvicorn", "notifications.src.main:app", "--host", "0.0.0.0", "--port", "3002", "--reload"]
 
-CMD ["python", "/code/notifications/src/telegram_bot/bot.py"]
+CMD notifications/tg_bot_and_fastapi.sh
