@@ -112,7 +112,7 @@ import {ref} from "vue"
 import ReturnToHomeBtn from "@components/ui/widgets/ReturnToHomeBtn.vue";
 import {Realty} from "@data/models/Realty";
 import {useSetLoading} from "@data/hooks/useSetLoading";
-import RealtyFieldsView from "@components/ui/realty/RealtyFieldsView.vue";
+import RealtyFieldsView from "@pages/realty/RealtyFieldsView.vue";
 import {serverApi} from "@/app/api/api";
 import {makeSectionId} from "@data/utils/transliterate";
 

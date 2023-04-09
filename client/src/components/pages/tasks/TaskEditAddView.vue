@@ -6,7 +6,10 @@
 
         <div class="row mt-5">
             <div class="col-8">
-
+                <tasks-fields-view
+                        :mode="mode"
+                        :task-item="taskItem"
+                />
             </div>
             <div class="col-1"></div>
             <div class="col-3 position-relative">
@@ -96,10 +99,13 @@
 
 <script lang="ts" setup>
 import {ref} from "vue"
-import ReturnToHomeBtn from "@components/ui/widgets/ReturnToHomeBtn.vue";
 import {useSetLoading} from "@data/hooks/useSetLoading";
 import {makeSectionId} from "@data/utils/transliterate";
+
 import {Task} from "@data/models/Task";
+
+import ReturnToHomeBtn from "@components/ui/widgets/ReturnToHomeBtn.vue";
+import TasksFieldsView from "@pages/tasks/TasksFieldsView.vue";
 
 const router = useRouter()
 const dialog = useDialog()

@@ -127,6 +127,7 @@ import CustomFieldsSection from "@components/ui/realty/CustomFieldsSection.vue";
 
 const router = useRouter()
 const message = useMessage()
+const dialog = useDialog()
 const props = defineProps<{
     realtyItem: Realty,
     loading: boolean,
@@ -145,7 +146,6 @@ const selectLocationType = [
     }
 ]
 
-const dialog = useDialog()
 const mapRef = ref()
 const locationType: Ref<string> = ref<string>('address')
 const workGroupStore = useWorkGroupStore()

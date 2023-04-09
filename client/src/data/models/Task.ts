@@ -3,6 +3,7 @@ import {Entity} from "@data/decorators/Entity";
 import {Column} from "../decorators/Column";
 import {API} from "@data/models/common/api/API";
 import {AdditionalModelFields} from "@data/types/additionalModelFields";
+import {WorkGroup} from "@data/models/WorkGroup";
 
 @Entity()
 export class Task extends BaseModel {
@@ -15,10 +16,10 @@ export class Task extends BaseModel {
     description?: string
 
     @Column()
-    status?: string
+    status!: 'pending' | 'in_progress' | 'review' | 'need_correction' | 'done'
 
     @Column()
-    title?: string
+    title!: string
 
     @Column({extractMethod: 'strapi'})
     realEstate?: any
@@ -28,6 +29,9 @@ export class Task extends BaseModel {
 
     @Column()
     additionalFields?: AdditionalModelFields = []
+
+    @Column({type: [WorkGroup]})
+    workGroups?: WorkGroup[] = []
 
     validate() {
         return !!(this.deadline &&
