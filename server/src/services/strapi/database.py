@@ -68,8 +68,8 @@ async def get_entity_id(collection, field, value):
     return None
 
 
-async def get_real_estate_with_tasks(real_estate_id):
-    def unwrap_attributes(object):
+async def get_real_estate_with_tasks(real_estate_id) -> dict:
+    def unwrap_attributes(object) -> dict | list:
         if isinstance(object, dict):
             if 'id' in object and 'attributes' in object:
                 for attribute_key in object['attributes'].keys():
