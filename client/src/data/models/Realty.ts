@@ -20,7 +20,7 @@ export class Realty extends BaseModel {
     address!: string
 
     @Column()
-    coordinates: {lat?: number, lon?: number} = {lat: undefined, lon: undefined}
+    coordinates: {lat: number, lon: number} = {lat: 0, lon: 0}
 
     @Column()
     objectState!: string

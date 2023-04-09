@@ -19,11 +19,11 @@
             <section id="location">
                 <h3 class="section-title mb-3">Местоположение</h3>
                 <n-form-item label="Округ" required>
-                    <n-input v-model:value="realtyItem.region" type="text"/>
+                    <n-input v-model:value="realtyItem.federalDistrict" type="text"/>
                 </n-form-item>
 
                 <n-form-item label="Район" required>
-                    <n-input/>
+                    <n-input v-model:value="realtyItem.region"/>
                 </n-form-item>
 
                 <n-form-item label="Способ ввода местоположения объекта">
@@ -33,20 +33,24 @@
                 <n-form-item v-if="locationType === 'coords'" :show-label="false">
                     <n-grid :cols="2" :x-gap="24">
                         <n-form-item-gi label="Долгота" required>
-                            <n-input
+                            <n-input-number
                                     placeholder="Формат: 55.74"
+                                    v-model:value="realtyItem.coordinates.lon"
+                                    @blur="emit('recognize')"
                             />
                         </n-form-item-gi>
                         <n-form-item-gi label="Широта" required>
-                            <n-input
+                            <n-input-number
                                     placeholder="Формат: 37.61"
+                                    v-model:value="realtyItem.coordinates.lat"
+                                    @blur="emit('recognize')"
                             />
                         </n-form-item-gi>
                     </n-grid>
                 </n-form-item>
 
                 <n-form-item v-else label="Адрес" required>
-                    <n-input/>
+                    <n-input v-model:value="realtyItem.address" @blur="emit('recognize')"/>
                 </n-form-item>
 
                 <n-form-item :show-label="false">
@@ -107,6 +111,7 @@ import {Realty} from "@data/models/Realty"
 const props = defineProps<{
     realtyItem: Realty
 }>()
+const emit = defineEmits(['recognize'])
 
 const selectLocationType = [
     {

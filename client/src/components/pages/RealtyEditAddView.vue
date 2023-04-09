@@ -6,7 +6,7 @@
 
         <div class="row mt-5">
             <div class="col-8">
-                <realty-fields-view v-if="view === 'realty'" :mode="mode" :realty-item="realtyItem"/>
+                <realty-fields-view v-if="view === 'realty'" :mode="mode" :realty-item="realtyItem" @recognize="recognizeAddress"/>
             </div>
             <div class="col-1"></div>
             <div class="col-3 position-relative">
@@ -92,6 +92,7 @@ import ReturnToHomeBtn from "@components/ui/widgets/ReturnToHomeBtn.vue";
 import {Realty} from "@data/models/Realty";
 import {useSetLoading} from "@data/hooks/useSetLoading";
 import RealtyFieldsView from "@components/ui/realty/RealtyFieldsView.vue";
+import {serverApi} from "@/app/api/api";
 
 const router = useRouter()
 const mode = router.currentRoute.value.path.includes('edit') ? 'edit' : 'add'
@@ -136,6 +137,38 @@ const allSections = computed(() => {
         anchor: section.sectionTitle.toLowerCase().replaceAll(' ', '_')
     }))]
 })
+
+const recognizeAddress = () => {
+    console.log('Recognize coords', realtyItem.address, realtyItem.coordinates)
+
+    let locationValue: { longitude: string, latitude: string } | { address: string } = {
+        longitude: '',
+        latitude: ''
+    }
+
+    if (realtyItem.coordinates?.lat && realtyItem.coordinates?.lon) {
+        locationValue = {
+            longitude: realtyItem.coordinates.lon + '',
+            latitude: realtyItem.coordinates.lat + ''
+        }
+
+        serverApi.post('/geo/position', {type: 'coords', value: locationValue}).then((r: any) => {
+            realtyItem.address = r.data.address
+            let coords = r.data.coords.pos.split(' ').map(parseFloat) as [number, number]
+            realtyItem.coordinates = {lat: coords[1], lon: coords[0]}
+        })
+    } else if (realtyItem.address) {
+        locationValue = {
+            address: realtyItem.address
+        }
+
+        serverApi.post('/geo/position', {type: 'address', value: locationValue}).then((r: any) => {
+            realtyItem.address = r.data.address
+            let coords = r.data.coords.pos.split(' ').map(parseFloat) as [number, number]
+            realtyItem.coordinates = {lat: coords[1], lon: coords[0]}
+        })
+    }
+}
 </script>
 
 <style scoped>
