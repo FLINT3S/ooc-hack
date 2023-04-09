@@ -63,31 +63,37 @@
                                 </template>
                             </n-button>
 
-                            <n-divider/>
+                            <transition name="fade">
+                                <div v-if="view === 'realty'">
+                                    <n-divider/>
 
-                            <n-space size="medium" vertical>
-                                <n-button v-for="section in allSections" block class="justify-content-start mb-2" text
-                                          @click="goToSection('#' + section.anchor)">
-                                    {{ section.title }}
-                                </n-button>
-                            </n-space>
+                                    <n-space size="medium" vertical>
+                                        <n-button v-for="section in allSections" block
+                                                  class="justify-content-start mb-2"
+                                                  text
+                                                  @click="goToSection('#' + section.anchor)">
+                                            {{ section.title }}
+                                        </n-button>
+                                    </n-space>
 
-                            <n-button
-                                    block
-                                    class="justify-content-start opacity-75 mt-4"
-                                    size="medium" text
-                                    @click="addSection"
-                            >
-                                <template #icon>
-                                    <svg fill="none" height="14" style="" viewBox="0 0 14 14" width="14"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13 8H8V13C8 13.55 7.55 14 7 14C6.45 14 6 13.55 6 13V8H1C0.45 8 0 7.55 0 7C0 6.45 0.45 6 1 6H6V1C6 0.45 6.45 0 7 0C7.55 0 8 0.45 8 1V6H13C13.55 6 14 6.45 14 7C14 7.55 13.55 8 13 8Z"
-                                              fill="#7A7A7A"/>
-                                    </svg>
-                                </template>
+                                    <n-button
+                                            block
+                                            class="justify-content-start opacity-75 mt-4"
+                                            size="medium" text
+                                            @click="addSection"
+                                    >
+                                        <template #icon>
+                                            <svg fill="none" height="14" style="" viewBox="0 0 14 14" width="14"
+                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M13 8H8V13C8 13.55 7.55 14 7 14C6.45 14 6 13.55 6 13V8H1C0.45 8 0 7.55 0 7C0 6.45 0.45 6 1 6H6V1C6 0.45 6.45 0 7 0C7.55 0 8 0.45 8 1V6H13C13.55 6 14 6.45 14 7C14 7.55 13.55 8 13 8Z"
+                                                      fill="#7A7A7A"/>
+                                            </svg>
+                                        </template>
 
-                                Добавить раздел
-                            </n-button>
+                                        Добавить раздел
+                                    </n-button>
+                                </div>
+                            </transition>
                         </n-card>
                     </n-spin>
 
