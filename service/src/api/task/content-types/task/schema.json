@@ -59,6 +59,9 @@
         "need_correction",
         "done"
       ]
+    },
+    "additionalFields": {
+      "type": "json"
     }
   }
 }
