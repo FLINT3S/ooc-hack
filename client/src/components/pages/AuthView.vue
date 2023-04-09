@@ -107,6 +107,7 @@ const isLoginDisabled = computed(() => {
 const onClickSubmitLogin = () => {
     withLoading(serverApi.post('/login', loginData))
         .then((res) => {
+            console.log(res)
         })
         .catch((e) => {
             onRejectLogin(e.message)

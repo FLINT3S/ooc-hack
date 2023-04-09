@@ -2,14 +2,14 @@
     <n-layout>
         <n-layout-header bordered>
             <section class="container py-2 d-flex justify-content-between align-items-center">
-                <router-link to="/" class="d-flex text-decoration-none">
+                <div class="d-flex">
                     <img alt="" height="35" src="@/assets/images/gin-logo.svg">
                     <div class="text-center my-auto lh-1 ms-2">
                         <h1 class="app-title my-0">
                             ГИН Ассистент
                         </h1>
                     </div>
-                </router-link>
+                </div>
 
                 <menu class="m-0 p-0 d-flex gap-3">
                     <header-navigation-item title="Объекты" to="/realty">
@@ -35,7 +35,7 @@
 
         <n-scrollbar style="height: calc(100vh - 52px)">
             <n-layout-content style="height: 100%">
-                <main style="min-height: calc(100vh - 83px)">
+                <main>
                     <slot></slot>
                 </main>
             </n-layout-content>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <SearchPanelInput :search-data="searchData" @search="onClickSearch"/>
+        <SearchPanelInput/>
         <SearchPanelFilters :search-data="searchData"/>
     </div>
 </template>
@@ -18,8 +18,4 @@ const searchData: SearchDataType = reactive({
         district: ''
     }
 })
-
-const onClickSearch = () => {
-    console.log(searchData)
-}
 </script>

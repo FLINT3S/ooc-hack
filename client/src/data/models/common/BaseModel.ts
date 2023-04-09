@@ -20,12 +20,6 @@ export abstract class BaseModel {
     @Column()
     id!: string | number
 
-    @Column({type: Date})
-    createdAt?: Date
-
-    @Column({type: Date})
-    updatedAt?: Date
-
 
     constructor(id: string = null as unknown as string) {
         this.id = id
@@ -58,11 +52,7 @@ export abstract class BaseModel {
                     this[thisProp] = new _propType(_propValue)
                 }
             } else {
-                if (!_propMetadata.extractMethod) {
-                    this[thisProp] = _propValue
-                } else {
-                    this[thisProp] = _propValue?.data ? {id: _propValue?.data?.id, ..._propValue?.data?.attributes} : null
-                }
+                this[thisProp] = _propValue
             }
         }
 
