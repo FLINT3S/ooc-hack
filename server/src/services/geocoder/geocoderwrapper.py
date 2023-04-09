@@ -28,18 +28,19 @@ class GeocoderWrapper:
             second_url = "&geocode=" + "+".join(geocoder_rest.value["address"].split(" "))
             url = self.first_URL + second_url + "&format=json"
             request = requests.get(url=url)
-            return self.get_normalized_json(request.json())
+            return self._get_normalized_json(request.json())
         elif GeocoderRestType.COORDS.value == geocoder_rest.type:
             longitude = geocoder_rest.value["longitude"]
             latitude = geocoder_rest.value["latitude"]
             second_url = "&geocode=" + longitude + "," + latitude
             url = self.first_URL + second_url + "&format=json"
             request = requests.get(url=url)
-            return self.get_normalized_json(request.json())
+            return self._get_normalized_json(request.json())
         else:
             return HTTPException(status_code=401, detail='Invalid type')
 
-    def get_normalized_json(self, json):
+    @staticmethod
+    def _get_normalized_json(json):
         return {
             "address":
                 json.get("response", {}).get("GeoObjectCollection", {}).get("featureMember", {})[0]

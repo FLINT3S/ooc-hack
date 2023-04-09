@@ -9,21 +9,24 @@ login = os.environ['STRAPI_LOGIN']
 password = os.environ['STRAPI_PASSWORD']
 
 
-async def update_entity(collection, object_id, data):
+async def _get_client() -> StrapiClient:
     strapi = StrapiClient(strapi_url)
     await strapi.authorize(login, password)
+    return strapi
+
+
+async def update_entity(collection, object_id, data):
+    strapi = await _get_client()
     await strapi.update_entry(collection, object_id, data=data)
 
 
 async def create_entity(collection, data):
-    strapi = StrapiClient(strapi_url)
-    await strapi.authorize(login, password)
+    strapi = await _get_client()
     await strapi.create_entry(collection, data)
 
 
 async def get_entity(collection, field, value):
-    strapi = StrapiClient(strapi_url)
-    await strapi.authorize(login, password)
+    strapi = await _get_client()
     try:
         data = await strapi.get_entries(collection, filters={field: {'$eq': value}})
         data = data["data"]
@@ -35,8 +38,7 @@ async def get_entity(collection, field, value):
 
 
 async def get_user(email=None, id=None):
-    strapi = StrapiClient(strapi_url)
-    await strapi.authorize(login, password)
+    strapi = await _get_client()
     try:
         if email:
             data = await strapi.get_entries("clients", filters={"email": {'$eq': email}})
@@ -58,8 +60,7 @@ async def get_user(email=None, id=None):
 
 
 async def get_entity_id(collection, field, value):
-    strapi = StrapiClient(strapi_url)
-    await strapi.authorize(login, password)
+    strapi = await _get_client()
     data = await strapi.get_entries(collection, filters={field: {'$eq': value}})
     data = data["data"]
     if data:
@@ -88,8 +89,7 @@ async def get_real_estate_with_tasks(real_estate_id):
                 unwrap_attributes(element)
         return object
 
-    strapi = StrapiClient(strapi_url)
-    await strapi.authorize(login, password)
+    strapi = await _get_client()
     find_params = {
         "filters": {"id": {'$eq': real_estate_id}},
         "populate": {

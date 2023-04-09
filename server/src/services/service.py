@@ -1,8 +1,6 @@
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .objects.routes import dormitories_router
-from .objects.routes import auth_router
 from .inputs.routes import input_router
 from .notifications.routes import notifications_router
 from .objects.routes import auth_router

@@ -1,6 +1,7 @@
 from datetime import datetime
+
 from pydantic import BaseModel
-from typing import List, Optional
+
 
 class Role(BaseModel):
     id: int
@@ -19,6 +20,7 @@ class User(BaseModel):
     telegramId: str
     apiKey: str
 
+
 class RealEstate(BaseModel):
     id: int
     federal_district: str
@@ -30,10 +32,12 @@ class RealEstate(BaseModel):
     owner: str
     actual_user_id: int
 
+
 class RealEstateAttachment(BaseModel):
     id: int
     real_estate_id: int
     link: str
+
 
 class Task(BaseModel):
     id: int
