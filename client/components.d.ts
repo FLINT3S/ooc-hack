@@ -63,7 +63,6 @@ declare module '@vue/runtime-core' {
     SearchPanelInput: typeof import('./src/components/ui/search/SearchPanelInput.vue')['default']
     SearchPlaceholderIcon: typeof import('./src/components/ui/icons/SearchPlaceholderIcon.vue')['default']
     SettingsIcon: typeof import('./src/components/ui/icons/SettingsIcon.vue')['default']
-    TaskByRealtyView: typeof import('./src/components/pages/TaskByRealtyView.vue')['default']
     TasksRegistryView: typeof import('./src/components/pages/TasksRegistryView.vue')['default']
     UpcomingEvents: typeof import('./src/components/ui/widgets/UpcomingEvents.vue')['default']
     UserIcon: typeof import('./src/components/ui/icons/UserIcon.vue')['default']

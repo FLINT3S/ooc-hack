@@ -138,7 +138,7 @@ const allSections = computed(() => {
     }))]
 })
 
-const recognizeAddress = () => {
+const recognizeAddress = (mode: 'address' | 'coords') => {
     console.log('Recognize coords', realtyItem.address, realtyItem.coordinates)
 
     let locationValue: { longitude: string, latitude: string } | { address: string } = {
@@ -146,7 +146,7 @@ const recognizeAddress = () => {
         latitude: ''
     }
 
-    if (realtyItem.coordinates?.lat && realtyItem.coordinates?.lon) {
+    if (realtyItem.coordinates?.lat && realtyItem.coordinates?.lon && mode === 'coords') {
         locationValue = {
             longitude: realtyItem.coordinates.lon + '',
             latitude: realtyItem.coordinates.lat + ''
@@ -155,9 +155,10 @@ const recognizeAddress = () => {
         serverApi.post('/geo/position', {type: 'coords', value: locationValue}).then((r: any) => {
             realtyItem.address = r.data.address
             let coords = r.data.coords.pos.split(' ').map(parseFloat) as [number, number]
-            realtyItem.coordinates = {lat: coords[1], lon: coords[0]}
+            realtyItem.coordinates = {lat: coords[0], lon: coords[1]}
+            console.log('Recognized:', realtyItem.address, realtyItem.coordinates)
         })
-    } else if (realtyItem.address) {
+    } else if (realtyItem.address && mode === 'address') {
         locationValue = {
             address: realtyItem.address
         }
@@ -165,7 +166,8 @@ const recognizeAddress = () => {
         serverApi.post('/geo/position', {type: 'address', value: locationValue}).then((r: any) => {
             realtyItem.address = r.data.address
             let coords = r.data.coords.pos.split(' ').map(parseFloat) as [number, number]
-            realtyItem.coordinates = {lat: coords[1], lon: coords[0]}
+            realtyItem.coordinates = {lat: coords[0], lon: coords[1]}
+            console.log('Recognized:', realtyItem.address, realtyItem.coordinates)
         })
     }
 }

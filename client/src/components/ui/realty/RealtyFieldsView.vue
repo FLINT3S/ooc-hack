@@ -32,32 +32,37 @@
 
                 <n-form-item v-if="locationType === 'coords'" :show-label="false">
                     <n-grid :cols="2" :x-gap="24">
-                        <n-form-item-gi label="Долгота" required>
-                            <n-input-number
-                                    placeholder="Формат: 55.74"
-                                    v-model:value="realtyItem.coordinates.lon"
-                                    @blur="emit('recognize')"
-                            />
-                        </n-form-item-gi>
                         <n-form-item-gi label="Широта" required>
                             <n-input-number
-                                    placeholder="Формат: 37.61"
                                     v-model:value="realtyItem.coordinates.lat"
-                                    @blur="emit('recognize')"
+                                    :step="0.01"
+                                    placeholder="Формат: 37.61"
+                                    @blur="emit('recognize', 'coords')"
+                            />
+                        </n-form-item-gi>
+
+                        <n-form-item-gi label="Долгота" required>
+                            <n-input-number
+                                    v-model:value="realtyItem.coordinates.lon"
+                                    :step="0.01"
+                                    placeholder="Формат: 55.74"
+                                    @blur="emit('recognize', 'coords')"
                             />
                         </n-form-item-gi>
                     </n-grid>
                 </n-form-item>
 
                 <n-form-item v-else label="Адрес" required>
-                    <n-input v-model:value="realtyItem.address" @blur="emit('recognize')"/>
+                    <n-input v-model:value="realtyItem.address" @blur="emit('recognize', 'address')"/>
                 </n-form-item>
 
                 <n-form-item :show-label="false">
                     <div class="d-flex flex-column w-100">
                         <div class="mb-1 d-flex justify-content-between">
                             <span>Объект на карте</span>
-                            <n-button text type="primary" @click="locationType = 'coords'">
+                            <n-button :disabled="!realtyItem.coordinates?.lat || !realtyItem.coordinates?.lon" text
+                                      type="primary"
+                                      @click="updateMapCoords">
                                 Обновить координаты
                             </n-button>
                         </div>
@@ -124,6 +129,7 @@ const selectLocationType = [
     }
 ]
 
+const mapRef = ref()
 const locationType: Ref<string> = ref<string>('address')
 const workGroupStore = useWorkGroupStore()
 workGroupStore.loadAllWorkGroups()
@@ -133,6 +139,10 @@ const workGroupOptions = computed(() => {
 })
 
 const buildingTypes = ref([])
+
+const updateMapCoords = () => {
+    mapRef.value.setCenter([props.realtyItem.coordinates.lon, props.realtyItem.coordinates.lat], 15)
+}
 
 strapiApi.get('building-types').then(r => {
     buildingTypes.value = r.data.data.map((t: any) => ({label: t.attributes.title, value: t.id}))
@@ -145,10 +155,12 @@ onMounted(() => {
 
     function init() {
         //@ts-ignore
-        let myMap = new ymaps.Map("map", {
-            center: [55.76, 37.64],
-            zoom: 7
-        });
+        mapRef.value = new ymaps.Map("map", {
+            center: props.realtyItem?.coordinates?.lon && props.realtyItem?.coordinates?.lat ?
+                [props.realtyItem.coordinates.lon, props.realtyItem.coordinates.lat] :
+                [55.76, 37.64],
+            zoom: 12
+        })
     }
 })
 </script>
