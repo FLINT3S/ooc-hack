@@ -32,3 +32,4 @@ dist
 build
 .strapi-updater.json
 node_modules
+uploads
