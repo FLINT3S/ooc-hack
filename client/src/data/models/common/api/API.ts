@@ -19,8 +19,8 @@ export class API<T extends BaseModel> {
         if (!this.methods.includes("getById")) {
             return Promise.reject(new Error("Method getById are not available"))
         }
-
-        return (await strapiApi.get(`${this.path}/${id}`)).data
+        const r = (await strapiApi.get(`${this.path}/${id}?populate=*`)).data.data
+        return {id: r.id, ...r.attributes}
     }
 
     async getAll(options: any = {}) {

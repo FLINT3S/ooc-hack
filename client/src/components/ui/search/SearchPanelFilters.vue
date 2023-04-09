@@ -8,7 +8,7 @@
             <n-popselect v-model:value="searchData.searchType" :options="options" trigger="click">
                 <div class="d-flex align-items-center cursor-pointer">
                 <span class="text-accent">
-                    {{ searchType.label }}
+                    {{ searchType?.label }}
                 </span>
                     <svg class="ms-1" fill="var(--accent-red)" height="5" style="" viewBox="0 0 10 5" width="8"
                          xmlns="http://www.w3.org/2000/svg">
@@ -18,7 +18,7 @@
             </n-popselect>
         </div>
 
-        <search-advanced-filters v-if="searchType.value === 'realty'" :search-data="searchData"/>
+        <search-advanced-filters v-if="searchType?.value === 'realty'" :search-data="searchData"/>
     </div>
 </template>
 
@@ -44,6 +44,6 @@ interface Props {
 const props = defineProps<Props>()
 
 const searchType = computed(() => {
-    return options.find((o) => o.value === props.searchData.searchType)!
+    return options.find((o) => o.value === props.searchData?.searchType)!
 })
 </script>

@@ -11,28 +11,31 @@ export class Realty extends BaseModel {
     api = new API('real-estates')
 
     @Column()
-    federalDistrict?: string
+    federalDistrict!: string
 
     @Column()
-    region?: string
+    region!: string
 
     @Column()
-    address?: string
+    address!: string
 
     @Column()
-    objectState?: string
+    coordinates: {lat?: number, lon?: number} = {lat: undefined, lon: undefined}
 
     @Column()
-    area?: string
+    objectState!: string
 
     @Column()
-    owner?: string
+    area!: string
+
+    @Column()
+    owner!: string
 
     @Column({extractMethod: 'strapi'})
-    buildingType?: BuildingType
+    buildingType!: BuildingType | number
 
     @Column()
-    actualUser?: string
+    actualUser!: string
 
     @Column()
     additionalFields?: AdditionalRealtyFields

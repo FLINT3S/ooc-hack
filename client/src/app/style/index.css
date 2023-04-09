@@ -71,3 +71,8 @@ html[theme="light"] html, html[theme="light"] body {
     color: var(--text-tethritary);
     font-weight: 400;
 }
+
+.section-title {
+    font-size: 20px;
+    font-weight: 400;
+}

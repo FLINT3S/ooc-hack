@@ -27,10 +27,6 @@ export const routes: RouteRecordRaw[] = [
             {
                 path: 'list',
                 component: () => import("@pages/TasksRegistryView.vue"),
-            },
-            {
-                path: 'byRealty/:realtyId',
-                component: () => import("@pages/TaskByRealtyView.vue"),
             }
         ]
     },

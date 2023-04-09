@@ -15,12 +15,13 @@ const router = useRouter()
 
 const searchData: SearchDataType = reactive({
     searchQuery: router.currentRoute.value?.query?.searchQuery as string || '',
-    searchType: router.currentRoute.value?.query?.searchType as string || '',
+    searchType: router.currentRoute.value?.query?.searchType as string || 'realty',
     filters: {
         area: router.currentRoute.value?.query?.['filters[area]'] as string || '',
         district: router.currentRoute.value?.query?.['filters[district]'] as string || ''
     }
 })
+
 
 const onClickSearch = () => {
     if (searchData.searchType === 'realty') {
