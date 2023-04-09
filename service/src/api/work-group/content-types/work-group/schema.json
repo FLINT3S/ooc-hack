@@ -20,6 +20,12 @@
       "relation": "manyToMany",
       "target": "api::client.client",
       "inversedBy": "workGroups"
+    },
+    "tasks": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::task.task",
+      "inversedBy": "workGroups"
     }
   }
 }

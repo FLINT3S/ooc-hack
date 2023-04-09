@@ -12,4 +12,3 @@ class RealEstate(BaseModel):
     attachments: list | None
     buildingType: int | None
     additionalFields: dict
-    tasks: list | None

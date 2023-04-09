@@ -51,6 +51,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::building-type.building-type"
+    },
+    "tasks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::task.task",
+      "mappedBy": "realEstate"
     }
   }
 }
