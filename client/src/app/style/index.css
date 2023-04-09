@@ -26,6 +26,10 @@ html[theme="light"] html, html[theme="light"] body {
     --text-tethritary: #A6A6A6;
 }
 
+span, a {
+    font-size: 16px;
+}
+
 .header-icon {
     color: var(--text-tethritary);
     transition: color .3s ease;

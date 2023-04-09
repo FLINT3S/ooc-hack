@@ -139,7 +139,8 @@ let rawRealtyColumns: DataTableColumns = [
                 {},
                 {default: () => `${row.deadline.toLocaleDateString()} ${row.deadline.toLocaleTimeString()}`}
             )
-        }
+        },
+        sorter: (row1: any, row2: any) => (row1.deadline - row2.deadline)
     },
     {
         title: 'Статус',
@@ -153,6 +154,31 @@ let rawRealtyColumns: DataTableColumns = [
                 {default: () => row.status}
             )
         },
+        filterOptions: [
+        {
+          label: 'Ожидает',
+          value: 'pending'
+        },
+        {
+          label: 'В работе',
+          value: 'in_progress'
+        },
+        {
+          label: 'На проверке',
+          value: 'review'
+        },
+        {
+          label: 'Требуется уточнение',
+          value: 'need_correction'
+        },
+        {
+          label: 'Завершено',
+          value: 'done'
+        }
+      ],
+      filter (value, row: any) {
+        return row.status === value
+      }
     },
     {
         title: 'Собственник',

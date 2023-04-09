@@ -154,7 +154,6 @@ let rawRealtyColumns: DataTableColumns = [
                 {default: () => getRealtyNearestDate(row)?.toLocaleDateString()}
             )
         },
-        sortOrder: 'ascend',
         sorter: (row1: any, row2: any) => getRealtyNearestDate(row1) - getRealtyNearestDate(row2)
     },
     {
