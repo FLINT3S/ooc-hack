@@ -107,6 +107,7 @@ import {Realty} from "@data/models/Realty";
 import {useSetLoading} from "@data/hooks/useSetLoading";
 import RealtyFieldsView from "@components/ui/realty/RealtyFieldsView.vue";
 import {serverApi} from "@/app/api/api";
+import {makeSectionId} from "@data/utils/transliterate";
 
 const router = useRouter()
 const dialog = useDialog()
@@ -133,7 +134,20 @@ const goToSection = (id: string) => {
 }
 
 const addSection = () => {
+    if (!realtyItem.additionalFields) {
+        realtyItem.additionalFields = []
+    }
 
+    realtyItem.additionalFields.push({
+        sectionTitle: 'Новая секция #' + (realtyItem.additionalFields?.length + 1 || 1),
+        fields: [
+            {
+                type: 'string',
+                value: '',
+                title: 'Новое поле'
+            }
+        ]
+    })
 }
 
 const allSections = computed(() => {
@@ -154,7 +168,7 @@ const allSections = computed(() => {
 
     return [...standardSections, ...(realtyItem.additionalFields || []).map((section) => ({
         title: section.sectionTitle,
-        anchor: section.sectionTitle.toLowerCase().replaceAll(' ', '_')
+        anchor: makeSectionId(section.sectionTitle)
     }))]
 })
 

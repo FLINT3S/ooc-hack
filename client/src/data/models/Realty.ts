@@ -39,7 +39,7 @@ export class Realty extends BaseModel {
     actualUser!: string
 
     @Column()
-    additionalFields?: AdditionalRealtyFields
+    additionalFields?: AdditionalRealtyFields = []
 
     @Column({type: [Task]})
     tasks: Task[] = []

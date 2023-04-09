@@ -104,6 +104,8 @@
                         <n-select v-model:value="workGroups" :options="workGroupOptions" filterable multiple/>
                     </n-form-item>
                 </section>
+
+                <custom-fields-section v-for="section in realtyItem.additionalFields" :section="section"/>
             </n-form>
         </n-spin>
     </div>
@@ -116,6 +118,7 @@ import {useWorkGroupStore} from "@data/store/workGroupStore";
 import {Realty} from "@data/models/Realty"
 import {WorkGroup} from "@data/models/WorkGroup";
 import {BuildingType} from "@data/models/nested/BuildingType";
+import CustomFieldsSection from "@components/ui/realty/CustomFieldsSection.vue";
 
 const router = useRouter()
 const message = useMessage()
