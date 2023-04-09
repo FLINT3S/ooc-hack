@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="headline-h1">{{ mode === 'edit' ? 'Данные объекта' : 'Добавление объекта' }}</h1>
-            <n-button tertiary type="primary" @click="onClickDeleteRealty">
+            <n-button tertiary type="primary" @click="onClickDeleteRealty" v-if="moded === 'edit">
                 <template #icon>
                     <svg fill="none" height="18" style="" viewBox="0 0 14 18" width="14"
                          xmlns="http://www.w3.org/2000/svg">
