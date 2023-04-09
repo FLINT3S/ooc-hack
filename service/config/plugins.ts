@@ -37,6 +37,30 @@ module.exports = ({ env }) => ({
             ],
           },
         },
+        {
+          uid: "api::task.task",
+          modelName: "task",
+          transliterate: true,
+          fuzzysortOptions: {
+            characterLimit: 300,
+            threshold: -1000,
+            limit: 100,
+            keys: [
+              {
+                name: "title",
+                weight: 300,
+              },
+              {
+                name: "realEstate",
+                weight: 100,
+              },
+              {
+                name: "description",
+                weight: 300,
+              }
+            ],
+          },
+        },
       ],
     },
   }

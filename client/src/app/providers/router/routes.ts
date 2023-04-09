@@ -26,7 +26,15 @@ export const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: 'list',
-                component: () => import("@pages/TasksRegistryView.vue"),
+                component: () => import("@pages/tasks/TasksRegistryView.vue"),
+            },
+            {
+                path: 'add',
+                component: () => import("@pages/tasks/TaskEditAddView.vue"),
+            },
+            {
+                path: 'edit/:id',
+                component: () => import("@pages/tasks/TaskEditAddView.vue"),
             }
         ]
     },
@@ -39,15 +47,15 @@ export const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: 'list',
-                component: () => import("@pages/RealtyRegistryView.vue"),
+                component: () => import("@pages/realty/RealtyRegistryView.vue"),
             },
             {
                 path: 'add',
-                component: () => import("@pages/RealtyEditAddView.vue"),
+                component: () => import("@pages/realty/RealtyEditAddView.vue"),
             },
             {
                 path: 'edit/:id',
-                component: () => import("@pages/RealtyEditAddView.vue"),
+                component: () => import("@pages/realty/RealtyEditAddView.vue"),
             }
         ]
     }

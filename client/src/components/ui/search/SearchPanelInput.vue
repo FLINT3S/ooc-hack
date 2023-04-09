@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex gap-1">
-        <n-input v-model:value="searchData.searchQuery" placeholder="Введите адрес объекта или идентификационный номер">
+        <n-input v-model:value="searchData.searchQuery" :placeholder="searchData.searchType === 'realty' ? 'Введите адрес объекта или идентификационный номер' : 'Введите название поручения или идентификационный номер'">
             <template #prefix>
                 <SearchPlaceholderIcon/>
             </template>

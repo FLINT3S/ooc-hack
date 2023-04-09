@@ -42,17 +42,20 @@ export abstract class BaseModel {
             return this
         }
 
-        for (const thisProp in this) {
-            if (thisProp === "api") continue
+        for (const __thisProp in this) {
+            if (__thisProp === "api") continue
 
-            const _propMetadata = __metadata[thisProp]
+            const _propMetadata = __metadata[__thisProp]
             const _propType = _propMetadata?.type
+            const thisProp = (_propMetadata?.jsonKey || __thisProp) as Extract<keyof this, string>
+
             const _propValue = (unknownJson as any)[thisProp]
 
             if (!_propValue) {
                 this[thisProp] = _propValue
                 continue
             }
+
 
             if (_propType) {
                 if (Array.isArray(_propValue)) {
