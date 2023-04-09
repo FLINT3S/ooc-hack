@@ -1,8 +1,10 @@
 import os
 
+import aiohttp
 from strapi_client import StrapiClient
 
 from server.src.services.strapi.models import User
+
 
 strapi_url = os.environ['STRAPI_URL']
 login = os.environ['STRAPI_LOGIN']
@@ -66,6 +68,34 @@ async def get_entity_id(collection, field, value):
     if data:
         return data[0]["id"]
     return None
+
+
+async def upload_file(filepath: str):
+    async def get_auth_header():
+        body = {
+            'identifier': login,
+            'password': password
+        }
+        async with aiohttp.ClientSession() as session:
+            async with session.post(f"{strapi_url}api/auth/local", json=body) as res:
+                if res.status != 200:
+                    raise Exception(f'Unable to authorize, error {res.status}: {res.reason}')
+                res_obj = await res.json()
+                token = res_obj['jwt']
+            return {'Authorization': 'Bearer ' + token}
+
+    def get_form_data():
+        form = aiohttp.FormData()
+        form.add_field('files', open(filepath, 'rb'), filename=filepath.split('/')[-1])
+        return form
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(
+                f"{strapi_url}api/upload",
+                headers=await get_auth_header(),
+                data=get_form_data()
+        ) as res:
+            return res.status, await res.json()
 
 
 async def get_real_estate_with_tasks(real_estate_id) -> dict:
