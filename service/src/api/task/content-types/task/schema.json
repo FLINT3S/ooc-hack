@@ -68,6 +68,16 @@
       "relation": "oneToMany",
       "target": "api::task-history.task-history",
       "mappedBy": "task"
+    },
+    "attachments": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
     }
   }
 }
