@@ -29,7 +29,7 @@ const statusMapping = {
     color: #636363;
 }
 
-.in-progress {
+.in_progress {
     background: #C1E1FF;
     color: #2A659B;
 }

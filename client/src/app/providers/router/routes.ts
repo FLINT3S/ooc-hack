@@ -8,7 +8,8 @@ export const routes: RouteRecordRaw[] = [
     },
     {
         path: '/login',
-        component: () => import("@pages/AuthView.vue")
+        component: () => import("@pages/AuthView.vue"),
+        props: true
     },
     {
         path: '/',

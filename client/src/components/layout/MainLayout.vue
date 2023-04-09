@@ -35,7 +35,7 @@
 
         <n-scrollbar style="height: calc(100vh - 52px)">
             <n-layout-content style="height: 100%">
-                <main style="min-height: calc(100vh - 83px)">
+                <main style="min-height: calc(100vh - 83px)" class="pb-3">
                     <slot></slot>
                 </main>
             </n-layout-content>

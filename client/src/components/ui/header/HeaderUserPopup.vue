@@ -10,7 +10,7 @@
                 <UserIcon/>
 
                 <p class="mx-1">
-                    Личный кабинет
+                    {{ root.currentUser?.name }}
                 </p>
 
                 <svg fill="none" height="5" style="" viewBox="0 0 10 5" width="10" xmlns="http://www.w3.org/2000/svg">

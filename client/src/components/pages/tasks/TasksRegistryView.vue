@@ -107,11 +107,13 @@ const taskColumns = computed(() => {
 let rawRealtyColumns: DataTableColumns = [
     {
         title: 'ИД',
-        key: 'id'
+        key: 'id',
+        width: 50
     },
     {
         title: 'Наименование',
         key: 'title',
+        ellipsis: true,
         render(row: any) {
             return h(
                 NButton,
@@ -129,6 +131,9 @@ let rawRealtyColumns: DataTableColumns = [
     {
         title: 'Ответственный',
         key: 'assignee.name',
+        render(row: any) {
+            return `${row.assignee.name} ${row.assignee.surname}`
+        }
     },
     {
         title: 'Срок',

@@ -13,10 +13,10 @@
                 </div>
 
                 <n-form
+                        ref="loginFormRef"
                         :model="loginData"
                         :rules="loginFormRules"
                         class="my-auto"
-                        ref="loginFormRef"
                 >
                     <n-form-item
                             label="Доменный email"
@@ -42,8 +42,8 @@
                     </n-form-item>
 
                     <n-form-item
-                        :feedback="loginError"
-                        validation-status="error"
+                            :feedback="loginError"
+                            validation-status="error"
                     >
                         <n-button
                                 :disabled="isLoginDisabled"
@@ -63,13 +63,23 @@
 
 <script lang="ts" setup>
 import {computed, reactive, ref} from "vue";
-import {serverApi} from "@/app/api/api";
 import {type FormItemRule, useMessage} from "naive-ui"
 import {useSetLoadingGlobal} from "@data/hooks/useSetLoading";
 import {validateEmail} from "@data/utils/emailValidate";
+import {useRootStore} from "@data/store/rootStore";
 
+const router = useRouter()
 const message = useMessage()
+const rootStore = useRootStore()
 const loginFormRef = ref()
+
+const props = defineProps<{
+    err?: string
+}>()
+
+if (props.err || router.currentRoute.value.query?.err) {
+    message.error((props.err || router.currentRoute.value.query?.err) as string)
+}
 
 const loginData = reactive({
     email: '',
@@ -80,15 +90,15 @@ const loginFormRules = {
     email: {
         required: true,
         trigger: 'blur',
-        validator (rule: FormItemRule, value: string) {
+        validator(rule: FormItemRule, value: string) {
             if (!value) {
                 return new Error('Обязательное поле')
             }
             if (!validateEmail(value)) {
-              return new Error('Введите корректную почту')
+                return new Error('Введите корректную почту')
             }
             return true
-          },
+        },
     },
     password: {
         required: true,
@@ -105,11 +115,12 @@ const isLoginDisabled = computed(() => {
 })
 
 const onClickSubmitLogin = () => {
-    withLoading(serverApi.post('/login', loginData))
+    withLoading(rootStore.login(loginData))
         .then((res) => {
+            router.replace('/')
         })
         .catch((e) => {
-            onRejectLogin(e.message)
+            onRejectLogin(e.message || e)
         })
 }
 
