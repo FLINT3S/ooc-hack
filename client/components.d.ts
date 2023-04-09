@@ -49,6 +49,7 @@ declare module '@vue/runtime-core' {
     NSelect: typeof import('naive-ui')['NSelect']
     NSkeleton: typeof import('naive-ui')['NSkeleton']
     NSpace: typeof import('naive-ui')['NSpace']
+    NSpin: typeof import('naive-ui')['NSpin']
     NThing: typeof import('naive-ui')['NThing']
     RealtyEditAddView: typeof import('./src/components/pages/RealtyEditAddView.vue')['default']
     RealtyFieldsView: typeof import('./src/components/ui/realty/RealtyFieldsView.vue')['default']

@@ -27,7 +27,7 @@ export abstract class BaseModel {
     updatedAt?: Date
 
 
-    constructor(id: string = null as unknown as string) {
+    constructor(id: number = null as unknown as number) {
         this.id = id
     }
 

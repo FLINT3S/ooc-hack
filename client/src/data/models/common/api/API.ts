@@ -48,7 +48,7 @@ export class API<T extends BaseModel> {
             return Promise.reject(new Error("Method update are not available"))
         }
 
-        return (await strapiApi.put(`${this.path}/${data.id}`, data.json)).data
+        return (await strapiApi.put(`${this.path}/${data.id}`, {data: data.json})).data
     }
 
     async delete(id: T["id"]) {
