@@ -1,9 +1,8 @@
-import asyncio
 import os
+
 from strapi_client import StrapiClient
 
 from server.src.services.strapi.models import User
-
 
 strapi_url = os.environ['STRAPI_URL']
 login = os.environ['STRAPI_LOGIN']
@@ -66,3 +65,43 @@ async def get_entity_id(collection, field, value):
     if data:
         return data[0]["id"]
     return None
+
+
+async def get_real_estate_with_tasks(real_estate_id):
+    def unwrap_attributes(object):
+        if isinstance(object, dict):
+            if 'id' in object and 'attributes' in object:
+                for attribute_key in object['attributes'].keys():
+                    object[attribute_key] = object['attributes'][attribute_key]
+                    if attribute_key != 'attachments' and isinstance(object[attribute_key], dict) and 'data' in object[attribute_key]:
+                        if isinstance(object[attribute_key]['data'], list):
+                            objects = []
+                            for element in object[attribute_key]['data']:
+                                objects.append(element)
+                            object[attribute_key] = objects
+                        elif isinstance(object[attribute_key]['data'], dict):
+                            object[attribute_key] = object[attribute_key]['data']
+                    unwrap_attributes(object[attribute_key])
+                object.pop('attributes')
+        elif isinstance(object, list):
+            for element in object:
+                unwrap_attributes(element)
+        return object
+
+    strapi = StrapiClient(strapi_url)
+    await strapi.authorize(login, password)
+    find_params = {
+        "filters": {"id": {'$eq': real_estate_id}},
+        "populate": {
+            "tasks": {
+                "populate": [
+                    "assignee"
+                ]
+            },
+            "buildingType": {
+                "populate": ["*"]
+            }
+        }
+    }
+    data = await strapi.get_entries("real-estates", **find_params)
+    return unwrap_attributes(data['data'][0])
