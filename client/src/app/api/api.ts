@@ -3,7 +3,7 @@ import axios from "axios";
 export const strapiApi = axios.create({
     baseURL: import.meta.env.PROD ?
         'https://strapi.ooc.flint3s.ru/api' :
-        'https://2198-178-71-66-26.eu.ngrok.io/api'
+        'https://ea12-178-71-66-26.ngrok-free.app/api'
 })
 
 export const serverApi = axios.create(({

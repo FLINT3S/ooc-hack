@@ -3,7 +3,8 @@ import 'reflect-metadata'
 type ColumnOptions = {
     type?: any,
     excludeFromJSON?: boolean,
-    jsonKey?: string
+    jsonKey?: string,
+    extractMethod?: 'strapi' | undefined | null
 }
 
 export const Column = (options: ColumnOptions = {}): PropertyDecorator => {

@@ -3,8 +3,8 @@ import {RouteRecordRaw} from "vue-router";
 
 export const routes: RouteRecordRaw[] = [
     {
-      path: '/:pathMatch(.*)*',
-      redirect: '/'
+        path: '/:pathMatch(.*)*',
+        redirect: '/'
     },
     {
         path: '/login',
@@ -19,16 +19,40 @@ export const routes: RouteRecordRaw[] = [
     },
     {
         path: '/tasks',
-        component: () => import("@pages/TasksRegistryView.vue"),
+        redirect: '/tasks/list',
         meta: {
             layout: MainLayout
-        }
+        },
+        children: [
+            {
+                path: 'list',
+                component: () => import("@pages/TasksRegistryView.vue"),
+            },
+            {
+                path: 'byRealty/:realtyId',
+                component: () => import("@pages/TaskByRealtyView.vue"),
+            }
+        ]
     },
     {
         path: '/realty',
-        component: () => import("@pages/RealtyRegistryView.vue"),
+        redirect: '/realty/list',
         meta: {
             layout: MainLayout
-        }
+        },
+        children: [
+            {
+                path: 'list',
+                component: () => import("@pages/RealtyRegistryView.vue"),
+            },
+            {
+                path: 'add',
+                component: () => import("@pages/RealtyEditAddView.vue"),
+            },
+            {
+                path: 'edit/:id',
+                component: () => import("@pages/RealtyEditAddView.vue"),
+            }
+        ]
     }
 ]
