@@ -1,5 +1,3 @@
-import datetime
-
 from openpyxl import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
 
@@ -25,7 +23,8 @@ class XlsxWriter:
         "taskTitle": lambda task: task["title"],
         "taskDeadline": lambda task: task["deadline"],
         "taskStatus": lambda task: task["status"],
-        "taskAssignee": lambda task: f"{task['assignee']['name']} {task['assignee']['surname']}, {task['assignee']['email']}"
+        "taskAssignee": lambda task: f"{task['assignee']['name']} {task['assignee']['surname']}, "
+                                     f"{task['assignee']['email']}"
     }
 
     def __init__(self, fields_involvement):
