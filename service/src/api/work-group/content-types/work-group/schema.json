@@ -4,7 +4,8 @@
   "info": {
     "singularName": "work-group",
     "pluralName": "work-groups",
-    "displayName": "WorkGroup"
+    "displayName": "WorkGroup",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -25,6 +26,12 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::task.task",
+      "inversedBy": "workGroups"
+    },
+    "realEstates": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::real-estate.real-estate",
       "inversedBy": "workGroups"
     }
   }

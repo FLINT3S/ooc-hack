@@ -26,6 +26,9 @@
     },
     "date": {
       "type": "string"
+    },
+    "sent": {
+      "type": "boolean"
     }
   }
 }

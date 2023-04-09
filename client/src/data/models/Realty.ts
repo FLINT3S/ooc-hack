@@ -4,6 +4,7 @@ import {Column} from "@data/decorators/Column";
 import {AdditionalRealtyFields} from "@data/types/additionalRealtyFields";
 import {API} from "@data/models/common/api/API";
 import { BuildingType } from "./nested/BuildingType";
+import {Task} from "@data/models/Task";
 
 @Entity()
 export class Realty extends BaseModel {
@@ -35,4 +36,7 @@ export class Realty extends BaseModel {
 
     @Column()
     additionalFields?: AdditionalRealtyFields
+
+    @Column({type: [Task]})
+    tasks?: Task[]
 }

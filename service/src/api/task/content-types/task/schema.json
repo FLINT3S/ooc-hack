@@ -44,7 +44,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::work-group.work-group",
-      "inversedBy": "tasks"
+      "mappedBy": "tasks"
     },
     "title": {
       "type": "string",

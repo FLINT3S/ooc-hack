@@ -9,5 +9,5 @@ export const strapiApi = axios.create({
 export const serverApi = axios.create(({
     baseURL: import.meta.env.PROD ?
         'https://ooc.flint3s.ru/api' :
-        'https://localhost:5000/api'
+        'https://ooc.flint3s.ru/api'
 }))

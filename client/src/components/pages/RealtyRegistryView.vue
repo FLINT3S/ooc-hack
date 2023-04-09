@@ -51,7 +51,7 @@
 <script lang="ts" setup>
 import {type Ref, ref} from "vue"
 
-import {DataTableColumns, NButton} from "naive-ui";
+import {DataTableColumns, NButton, NP} from "naive-ui";
 import {RouterLink} from "vue-router";
 
 import {useRealtyStore} from "@data/store/realtyStore";
@@ -59,6 +59,7 @@ import {useSetLoading} from "@data/hooks/useSetLoading";
 import ReturnToHomeBtn from "@components/ui/widgets/ReturnToHomeBtn.vue";
 import SearchPanel from "@components/ui/search/SearchPanel.vue";
 import DownloadRealtyReport from "@components/ui/widgets/DownloadRealtyReport.vue";
+import {Task} from "@data/models/Task";
 
 const router = useRouter()
 const realtyStore = useRealtyStore()
@@ -81,6 +82,10 @@ const handlePageChange = (currentPage: number) => {
     if (!loading.value) {
         pagination.page = currentPage
     }
+}
+
+const getRealtyNearestDate = (row: any) => {
+    return [...row.tasks.map((t: Task) => t?.deadline), row?.createdAt].sort((a, b) => a - b)[0]
 }
 
 const realtyColumns: DataTableColumns = [
@@ -108,6 +113,18 @@ const realtyColumns: DataTableColumns = [
     {
         title: 'Собственник',
         key: 'owner'
+    },
+    {
+        title: 'Ближайшая дата',
+        key: 'date',
+        render(row: any) {
+            return h(
+                NP,
+                {},
+                {default: () => getRealtyNearestDate(row)?.toLocaleDateString()}
+            )
+        },
+        sorter: (row1: any, row2: any) => getRealtyNearestDate(row1) - getRealtyNearestDate(row2)
     },
     {
         title: 'Состояние',

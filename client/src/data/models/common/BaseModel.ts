@@ -50,10 +50,10 @@ export abstract class BaseModel {
             const _propValue = (unknownJson as any)[thisProp]
 
             if (_propType) {
-                if (Array.isArray(_propValue)) {
-                    this[thisProp] = _propValue.map((item: any) => new _propType[0]().fromJSON(item)) as any
+                if (Array.isArray(_propValue?.data)) {
+                    this[thisProp] = _propValue.data.map((item: any) => new _propType[0]().fromJSON({id: item?.id, ...item?.attributes})) as any
                 } else if (new _propType() instanceof BaseModel) {
-                    this[thisProp] = new _propType().fromJSON(_propValue)
+                    this[thisProp] = new _propType().fromJSON({id: _propValue?.data?.id, ..._propValue?.data?.attributes})
                 } else if (_propValue !== undefined && _propType !== String) {
                     this[thisProp] = new _propType(_propValue)
                 }

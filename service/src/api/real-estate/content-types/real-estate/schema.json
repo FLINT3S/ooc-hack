@@ -57,6 +57,12 @@
       "relation": "oneToMany",
       "target": "api::task.task",
       "mappedBy": "realEstate"
+    },
+    "workGroups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::work-group.work-group",
+      "mappedBy": "realEstates"
     }
   }
 }

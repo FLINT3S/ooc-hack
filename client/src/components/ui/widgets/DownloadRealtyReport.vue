@@ -65,7 +65,7 @@
 <script lang="ts" setup>
 import {ref} from "vue"
 import {NButton} from "naive-ui";
-import {serverApi} from "@/app/api/api";
+import {serverApi, strapiApi} from "@/app/api/api";
 import {useSetLoading} from "@data/hooks/useSetLoading";
 
 interface Props {
@@ -87,10 +87,17 @@ const reportSettings = reactive({
 })
 
 const onClickGenerateReport = () => {
-    useSetLoading(serverApi.post('/report', {
+    useSetLoading(serverApi.post('/xlsx/generate', {
         realtyIds: props.selectedRealtyIds,
         reportSettings: reportSettings
-    }), loading)
+    }), loading).then((r: any) => {
+        const downloadLink = document.createElement('a')
+        downloadLink.download = `report-${new Date().toLocaleDateString()}-${new Date().toLocaleTimeString()}.xlsx`
+        downloadLink.href = "https://strapi.ooc.flint3s.ru" + r.data[0].url
+        document.body.appendChild(downloadLink)
+        downloadLink.click()
+        document.body.removeChild(downloadLink)
+    })
 }
 </script>
 
