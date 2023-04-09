@@ -1,6 +1,5 @@
 import {BaseModel} from "../BaseModel"
 import {strapiApi} from "@/app/api/api";
-import qs from "qs"
 
 type method = "all" | "create" | "update" | "delete" | "getAll" | "getById"
 
@@ -28,8 +27,7 @@ export class API<T extends BaseModel> {
             return Promise.reject(new Error("Method getAll are not available"))
         }
 
-        const query = qs.stringify(options);
-        return (await strapiApi.get(this.path + '?' + query)).data
+        return (await strapiApi.get(this.path)).data
     }
 
     async create(data: T) {

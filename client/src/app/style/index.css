@@ -60,14 +60,3 @@ html[theme="light"] html, html[theme="light"] body {
     text-decoration: underline var(--accent-red);
     text-underline-offset: 4px;
 }
-
-.headline-h1 {
-    font-size: 40px;
-    font-weight: 400;
-}
-
-.found-rows {
-    font-size: 20px;
-    color: var(--text-tethritary);
-    font-weight: 400;
-}

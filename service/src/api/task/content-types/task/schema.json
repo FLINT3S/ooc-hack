@@ -30,9 +30,8 @@
     },
     "realEstate": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::real-estate.real-estate",
-      "inversedBy": "tasks"
+      "relation": "oneToOne",
+      "target": "api::real-estate.real-estate"
     },
     "meetings": {
       "type": "relation",
@@ -40,25 +39,14 @@
       "target": "api::meeting.meeting",
       "mappedBy": "tasks"
     },
-    "workGroups": {
+    "workGroup": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::work-group.work-group",
-      "inversedBy": "tasks"
+      "relation": "oneToOne",
+      "target": "api::work-group.work-group"
     },
     "title": {
       "type": "string",
       "required": true
-    },
-    "status": {
-      "type": "enumeration",
-      "enum": [
-        "pending",
-        "in_progress",
-        "review",
-        "need_correction",
-        "done"
-      ]
     }
   }
 }

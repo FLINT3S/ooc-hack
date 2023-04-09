@@ -24,7 +24,7 @@
                     </n-list>
                 </n-card>
 
-                <router-link class="mt-3 d-flex align-items-center text-accent text-decoration-none" to="/tasks">
+                <router-link class="mt-3 d-flex align-items-center text-accent text-decoration-none" to="/decisions">
                     <span class="me-2">Все уведомления</span>
                     <ArrowRightIcon/>
                 </router-link>

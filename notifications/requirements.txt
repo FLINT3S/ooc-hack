@@ -1,5 +1,0 @@
-requests
-fastapi
-aiogram
-starlette
-uvicorn

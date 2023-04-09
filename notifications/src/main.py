@@ -1,13 +1,7 @@
-# -*- coding: utf-8 -*-
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 import uvicorn
-from pydantic import BaseModel
-
-from urllib.parse import unquote
-
-import json
 
 app = FastAPI()
 
@@ -20,18 +14,8 @@ app.add_middleware(
 )
 
 
-class Data(BaseModel):
-    data: str
-
-
-@app.post("/notifications/new_notification/")
-async def root(data = Body()):
-    print("фыафыа))123")
-    # print(data.json())
-    data = data.decode('utf-8')
-    data = (unquote(data))[8:]
-    print(json.loads(data))
-    # print(json.loads(data.decode('utf8')))
+@app.get("/notification")
+async def root():
     return {"message": "Notif!"}
 
 
