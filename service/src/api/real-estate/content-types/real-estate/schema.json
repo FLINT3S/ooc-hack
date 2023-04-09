@@ -63,6 +63,9 @@
       "relation": "manyToMany",
       "target": "api::work-group.work-group",
       "mappedBy": "realEstates"
+    },
+    "coordinates": {
+      "type": "json"
     }
   }
 }
