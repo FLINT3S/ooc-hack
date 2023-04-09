@@ -62,6 +62,12 @@
     },
     "additionalFields": {
       "type": "json"
+    },
+    "taskHistories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::task-history.task-history",
+      "mappedBy": "task"
     }
   }
 }
