@@ -33,6 +33,9 @@ export class Task extends BaseModel {
     @Column({type: [WorkGroup]})
     workGroups?: WorkGroup[] = []
 
+    @Column({extractMethod: 'strapi-array'})
+    attachments: any
+
     validate() {
         return !!(this.deadline &&
             this.status &&

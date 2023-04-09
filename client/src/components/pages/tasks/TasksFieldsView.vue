@@ -65,9 +65,7 @@
             </n-form>
         </section>
 
-        <section id="documents">
-
-        </section>
+        <documents-section @upload="onFilesUpload"/>
 
         <section id="history">
 
@@ -83,6 +81,8 @@ import {useSetLoadingGlobal} from "@data/hooks/useSetLoading";
 import {WorkGroup} from "@data/models/WorkGroup";
 import {useClientStore} from "@data/store/clientStore";
 import {Client} from "@data/models/Client";
+import DocumentsSection from "@components/ui/widgets/DocumentsSection.vue";
+import {strapiApi} from "@/app/api/api";
 
 const props = defineProps<{
     mode: 'edit' | 'add',
@@ -126,6 +126,12 @@ const assignee = computed({
         props.taskItem.assignee = new Client(assigneeId)
     },
 })
+
+const onFilesUpload = (attachments: any) => {
+    console.log(attachments)
+    strapiApi.put(`/tasks/${props.taskItem.id}`, {data: {attachments: [...(props.taskItem?.attachments ? props.taskItem.attachments.map((a: any) => a.id) : []), ...attachments.map(a => a.id)]}})
+    props.taskItem.load()
+}
 
 const initData = () => {
     withLoading(Promise.all([workGroupStore.loadAllWorkGroups(), clientStore.loadAllClients()]))
