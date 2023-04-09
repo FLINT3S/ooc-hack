@@ -12,6 +12,7 @@
                         :mode="mode"
                         :realty-item="realtyItem"
                         @recognize="recognizeAddress"
+                        @add-section="addSection"
                 />
             </div>
             <div class="col-1"></div>

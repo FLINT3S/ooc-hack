@@ -4,10 +4,9 @@
             <h1 class="headline-h1">{{ mode === 'edit' ? 'Данные объекта' : 'Добавление объекта' }}</h1>
             <n-button tertiary type="primary" @click="onClickDeleteRealty" v-if="mode === 'edit'">
                 <template #icon>
-                    <svg fill="none" height="18" style="" viewBox="0 0 14 18" width="14"
+                    <svg fill="currentColor" height="18" style="" viewBox="0 0 14 18" width="14"
                          xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9.12 7.47L7 9.59L4.87 7.47L3.46 8.88L5.59 11L3.47 13.12L4.88 14.53L7 12.41L9.12 14.53L10.53 13.12L8.41 11L10.53 8.88L9.12 7.47ZM10.5 1L9.5 0H4.5L3.5 1H0V3H14V1H10.5ZM1 16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4H1V16ZM3 6H11V16H3V6Z"
-                              fill="#B91827"/>
+                        <path d="M9.12 7.47L7 9.59L4.87 7.47L3.46 8.88L5.59 11L3.47 13.12L4.88 14.53L7 12.41L9.12 14.53L10.53 13.12L8.41 11L10.53 8.88L9.12 7.47ZM10.5 1L9.5 0H4.5L3.5 1H0V3H14V1H10.5ZM1 16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4H1V16ZM3 6H11V16H3V6Z"/>
                     </svg>
                 </template>
 
@@ -107,6 +106,12 @@
 
                 <custom-fields-section v-for="section in realtyItem.additionalFields" :section="section"/>
             </n-form>
+
+            <div class="d-flex">
+                <n-button secondary type="primary" size="large" class="mt-4 mx-auto" @click="emit('add-section')">
+                    Добавить новый раздел
+                </n-button>
+            </div>
         </n-spin>
     </div>
 </template>
@@ -127,7 +132,7 @@ const props = defineProps<{
     loading: boolean,
     mode: 'edit' | 'add'
 }>()
-const emit = defineEmits(['recognize'])
+const emit = defineEmits(['recognize', 'add-section'])
 
 const selectLocationType = [
     {
