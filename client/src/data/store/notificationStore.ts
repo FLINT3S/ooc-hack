@@ -10,7 +10,7 @@ export const useNotificationStore = defineStore('notification', {
         }
     },
     actions: {
-        async loadAllNotifications(page: number) {
+        async loadAllNotifications() {
             const res = (await useStrapiListFetch(Notification, {
                 populate: '*',
                 pagination: {pageSize: 1000},
