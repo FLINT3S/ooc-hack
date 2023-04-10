@@ -24,7 +24,7 @@
                         <WorkOutlineFilled width="24"/>
                     </header-navigation-item>
 
-                    <header-navigation-item title="Дашборд" to="/">
+                    <header-navigation-item title="Дашборд" to="/analytics">
                         <InsertChartOutlined width="24"/>
                     </header-navigation-item>
                 </menu>

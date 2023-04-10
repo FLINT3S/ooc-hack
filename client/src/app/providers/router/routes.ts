@@ -23,6 +23,13 @@ export const routes: RouteRecordRaw[] = [
         }
     },
     {
+        path: '/analytics',
+        component: () => import('@pages/Analytics.vue'),
+        meta: {
+            layout: MainLayout
+        }
+    },
+    {
         path: '/workGroups',
         component: () => import('@pages/WorkGroupsView.vue'),
         meta: {
