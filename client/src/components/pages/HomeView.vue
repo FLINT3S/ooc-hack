@@ -30,20 +30,25 @@
                 </router-link>
             </section>
 
-            <section class="mt-5">
-                <n-card size="medium">
-                    <div class="row">
-                        <div class="col-4">
-                            <DashboardNumber number="4" title="Нарушений на объектах"/>
-                        </div>
-                        <div class="col-4">
-                            <DashboardNumber number="6" title="Требуют внимания"/>
-                        </div>
-                        <div class="col-4">
-                            <DashboardNumber number="12" title="Просроченных задач"/>
-                        </div>
-                    </div>
-                </n-card>
+            <section class="mt-4 row">
+                <div class="col-4">
+                    <n-card>
+                        <span class="text-secondary">Всео объектов</span>
+                        <h1 class="headline-h1">22</h1>
+                    </n-card>
+                </div>
+                <div class="col-4">
+                    <n-card>
+                        <span class="text-secondary">Решений в ожидании</span>
+                        <h1 class="headline-h1">12</h1>
+                    </n-card>
+                </div>
+                <div class="col-4">
+                    <n-card>
+                        <span class="text-secondary">Решений без срока</span>
+                        <h1 class="headline-h1">3</h1>
+                    </n-card>
+                </div>
             </section>
             <router-link class="mt-3 d-flex align-items-center text-accent text-decoration-none" to="/analytics">
                 <span class="me-2">Календарь и аналитика</span>
@@ -55,7 +60,6 @@
 
 <script lang="ts" setup>
 import SearchPanel from "@components/ui/search/SearchPanel.vue";
-import DashboardNumber from "@components/ui/widgets/DashboardNumber.vue";
 import ArrowRightIcon from "@components/ui/icons/ArrowRightIcon.vue";
 import {useNotificationStore} from "@data/store/notificationStore";
 
