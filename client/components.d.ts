@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     Analytics: typeof import('./src/components/pages/Analytics.vue')['default']
     ArrowRightIcon: typeof import('./src/components/ui/icons/ArrowRightIcon.vue')['default']
     AuthView: typeof import('./src/components/pages/AuthView.vue')['default']
+    Calendar: typeof import('./src/components/pages/Calendar.vue')['default']
     CustomFieldsSection: typeof import('./src/components/ui/realty/CustomFieldsSection.vue')['default']
     DashboardNumber: typeof import('./src/components/ui/widgets/DashboardNumber.vue')['default']
     DocumentsSection: typeof import('./src/components/ui/widgets/DocumentsSection.vue')['default']

@@ -54,6 +54,10 @@
                 <span class="me-2">Календарь и аналитика</span>
                 <ArrowRightIcon/>
             </router-link>
+
+            <section class="mt-5">
+                <Calendar/>
+            </section>
         </div>
     </div>
 </template>
@@ -62,6 +66,7 @@
 import SearchPanel from "@components/ui/search/SearchPanel.vue";
 import ArrowRightIcon from "@components/ui/icons/ArrowRightIcon.vue";
 import {useNotificationStore} from "@data/store/notificationStore";
+import Calendar from "@pages/Calendar.vue";
 
 const notificationStore = useNotificationStore()
 notificationStore.loadAllNotifications()
