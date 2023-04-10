@@ -67,7 +67,7 @@
 
         <documents-section :item="taskItem" @upload="onFilesUpload"/>
 
-        <section id="history" class="mt-4">
+        <section id="history" class="mt-4 mb-4">
             <h3 class="section-title mb-3">История изменений</h3>
 
             <n-list>
@@ -79,6 +79,16 @@
                 </n-list-item>
             </n-list>
         </section>
+
+        <n-form>
+            <custom-fields-section v-for="section in taskItem.additionalFields" :section="section"/>
+        </n-form>
+
+        <div class="d-flex">
+            <n-button class="mt-4 mx-auto" secondary size="large" type="primary" @click="emit('add-section')">
+                Добавить новый раздел
+            </n-button>
+        </div>
     </div>
 </template>
 
@@ -95,11 +105,14 @@ import {strapiApi} from "@/app/api/api";
 import {TaskHistory} from "@data/models/TaskHistory";
 import {useRootStore} from "@data/store/rootStore";
 import {getDateTime} from "@data/utils/dateFormatter";
+import CustomFieldsSection from "@components/ui/realty/CustomFieldsSection.vue";
 
 const props = defineProps<{
     mode: 'edit' | 'add',
     taskItem: Task
 }>()
+
+const emit = defineEmits(['add-section'])
 
 const {loading, withLoading} = useSetLoadingGlobal()
 const router = useRouter()

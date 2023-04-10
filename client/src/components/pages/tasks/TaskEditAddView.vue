@@ -10,6 +10,7 @@
                     <tasks-fields-view
                             :mode="mode"
                             :task-item="taskItem"
+                            @add-section="onClickAddSection"
                     />
                 </n-spin>
             </div>
@@ -74,7 +75,7 @@
                                     block
                                     class="justify-content-start opacity-75 mt-4"
                                     size="medium" text
-                                    @click="addSection"
+                                    @click="onClickAddSection"
                             >
                                 <template #icon>
                                     <svg fill="none" height="14" style="" viewBox="0 0 14 14" width="14"
@@ -132,7 +133,7 @@ const goToSection = (id: string) => {
     })
 }
 
-const addSection = () => {
+const onClickAddSection = () => {
     if (!taskItem.additionalFields) {
         taskItem.additionalFields = []
     }
