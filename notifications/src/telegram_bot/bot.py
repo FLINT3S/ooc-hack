@@ -10,13 +10,25 @@ from aiogram import Bot, Dispatcher, executor, types
 
 from strapi_client import StrapiClient
 
+
 strapi_url = "https://ea12-178-71-66-26.ngrok-free.app/"
 login = "ooc-hack@flint3s.ru"
 password = "Sadness9-Judiciary-Fraternal"
+API_TOKEN = '5993589215:AAEn7MCPVCP-NMl0exmzej3FIKqGln5-5Hg'
 
 # strapi_url = os.environ['STRAPI_URL']
 # login = os.environ['STRAPI_LOGIN']
 # password = os.environ['STRAPI_PASSWORD']
+# API_TOKEN = os.environ['API_TOKEN']
+
+bot = Bot(token=API_TOKEN)
+
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=storage)
+users = []
+
+class Form(StatesGroup):
+    email = State()
 
 
 async def get_users():
@@ -36,19 +48,6 @@ async def update_user_telegramId(user_id, telegramId):
     strapi = StrapiClient(strapi_url)
     await strapi.authorize(login, password)
     await strapi.update_entry("clients", user_id, data={"telegramId": telegramId})
-
-# API_TOKEN = os.environ['API_TOKEN']
-
-API_TOKEN = '5993589215:AAEn7MCPVCP-NMl0exmzej3FIKqGln5-5Hg'
-
-
-bot = Bot(token=API_TOKEN)
-storage = MemoryStorage()
-dp = Dispatcher(bot, storage=storage)
-users = []
-
-class Form(StatesGroup):
-    email = State()
 
 
 class RunThread(threading.Thread):
