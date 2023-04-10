@@ -128,7 +128,7 @@ const assignee = computed({
 })
 
 const onFilesUpload = (attachments: any) => {
-    strapiApi.put(`/tasks/${props.taskItem.id}`, {data: {attachments: [...(props.taskItem?.attachments ? props.taskItem.attachments.map((a: any) => a.id) : []), ...attachments.map(a => a.id)]}})
+    strapiApi.put(`/tasks/${props.taskItem.id}`, {data: {attachments: [...(props.taskItem?.attachments ? props.taskItem.attachments.map((a: any) => a.id) : []), ...attachments.map((a : any) => a.id)]}})
     props.taskItem.load()
 }
 
