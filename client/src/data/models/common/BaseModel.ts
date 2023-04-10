@@ -44,7 +44,7 @@ export abstract class BaseModel {
             if (_propType) {
                 if (Array.isArray(_propValue)) {
                     json[thisProp] = _propValue.map((item: any) => item.json)
-                } else if (new _propType() instanceof BaseModel) {
+                } else if (!Array.isArray(_propType) && new _propType() instanceof BaseModel) {
                     // @ts-ignore
                     json[thisProp] = _propValue?.json
                 } else {
