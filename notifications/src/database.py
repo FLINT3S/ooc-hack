@@ -1,13 +1,9 @@
 import os
 from strapi_client import StrapiClient
 
-strapi_url = "https://ea12-178-71-66-26.ngrok-free.app/"
-login = "ooc-hack@flint3s.ru"
-password = "Sadness9-Judiciary-Fraternal"
-
-# strapi_url = os.environ['STRAPI_URL']
-# login = os.environ['STRAPI_LOGIN']
-# password = os.environ['STRAPI_PASSWORD']
+strapi_url = os.environ['STRAPI_URL']
+login = os.environ['STRAPI_LOGIN']
+password = os.environ['STRAPI_PASSWORD']
 
 
 async def create_notification(data):
