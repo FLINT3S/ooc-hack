@@ -4,6 +4,7 @@ import {Column} from "../decorators/Column";
 import {API} from "@data/models/common/api/API";
 import {AdditionalModelFields} from "@data/types/additionalModelFields";
 import {WorkGroup} from "@data/models/WorkGroup";
+import {TaskHistory} from "@data/models/TaskHistory";
 
 @Entity()
 export class Task extends BaseModel {
@@ -16,7 +17,7 @@ export class Task extends BaseModel {
     description?: string
 
     @Column()
-    status!: 'pending' | 'in_progress' | 'review' | 'need_correction' | 'done'
+    status: 'pending' | 'in_progress' | 'review' | 'need_correction' | 'done' = 'pending'
 
     @Column()
     title!: string
@@ -32,6 +33,29 @@ export class Task extends BaseModel {
 
     @Column({type: [WorkGroup]})
     workGroups?: WorkGroup[] = []
+
+    @Column({extractMethod: 'strapi-array'})
+    attachments: any
+
+    @Column({extractMethod: 'strapi-array'})
+    meetings: any = []
+
+    @Column({type: [TaskHistory]})
+    taskHistories: TaskHistory[] = []
+
+    get nearestMeeting() {
+        if (!this.meetings || !this.meetings.length) {
+            return null
+        }
+
+        return this.meetings
+            .filter((m: any) => {
+                return (new Date(m.date).getTime() - new Date().getTime()) > 0
+            })
+            .sort((m1: any, m2: any) => {
+                return new Date(m1.date).getTime() - new Date(m2.date).getTime()
+            })[0]
+    }
 
     validate() {
         return !!(this.deadline &&

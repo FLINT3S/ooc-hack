@@ -89,3 +89,7 @@ span, a, div {
 .card-secondary .n-card__content {
     background: #F7F7FA;
 }
+
+.n-dialog.n-modal {
+    width: 540px;
+}

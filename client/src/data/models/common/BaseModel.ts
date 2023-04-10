@@ -3,10 +3,21 @@ import {Column} from "@data/decorators/Column";
 
 
 export abstract class BaseModel {
-    // Definition to specify api path and methods
-    protected api!: Partial<API<BaseModel>>
     // Definition to use $api from models prototype
     public static $api: API<BaseModel>
+    @Column()
+    id!: string | number
+    @Column({type: Date})
+    createdAt?: Date
+    @Column({type: Date})
+    updatedAt?: Date
+    // Definition to specify api path and methods
+    protected api!: Partial<API<BaseModel>>
+
+    constructor(id: number = null as unknown as number) {
+        this.id = id
+    }
+
     // Uses as inner api to work with instance
     get _api() {
         // @ts-ignore
@@ -17,18 +28,34 @@ export abstract class BaseModel {
         return __api as API<BaseModel>
     }
 
-    @Column()
-    id!: string | number
+    get json() {
+        const __metadata = Reflect.getMetadata("columns", this.constructor)
+        const json: any = {}
 
-    @Column({type: Date})
-    createdAt?: Date
+        for (const thisProp in this) {
+            if (thisProp === "api") continue
 
-    @Column({type: Date})
-    updatedAt?: Date
+            const _propMetadata = __metadata[thisProp]
+            const _propType = _propMetadata?.type
+            const _propValue = this[thisProp]
 
+            if (_propMetadata?.excludeFromJSON) continue
 
-    constructor(id: number = null as unknown as number) {
-        this.id = id
+            if (_propType) {
+                if (Array.isArray(_propValue)) {
+                    json[thisProp] = _propValue.map((item: any) => item.json)
+                } else if (new _propType() instanceof BaseModel) {
+                    // @ts-ignore
+                    json[thisProp] = _propValue?.json
+                } else {
+                    json[thisProp] = _propValue
+                }
+            } else {
+                json[thisProp] = _propValue
+            }
+        }
+
+        return json
     }
 
     public fromJSON(json: object): this {
@@ -70,6 +97,10 @@ export abstract class BaseModel {
             } else {
                 if (!_propMetadata.extractMethod) {
                     this[thisProp] = _propValue
+                } else if (_propMetadata.extractMethod === 'strapi-array') {
+                    this[thisProp] = _propValue?.data ?
+                        _propValue?.data.map((d: any) => ({id: d?.id, ...d?.attributes})) :
+                        null
                 } else {
                     this[thisProp] = _propValue?.data ? {id: _propValue?.data?.id, ..._propValue?.data?.attributes} : null
                 }
@@ -77,36 +108,6 @@ export abstract class BaseModel {
         }
 
         return this
-    }
-
-    get json() {
-        const __metadata = Reflect.getMetadata("columns", this.constructor)
-        const json: any = {}
-
-        for (const thisProp in this) {
-            if (thisProp === "api") continue
-
-            const _propMetadata = __metadata[thisProp]
-            const _propType = _propMetadata?.type
-            const _propValue = this[thisProp]
-
-            if (_propMetadata?.excludeFromJSON) continue
-
-            if (_propType) {
-                if (Array.isArray(_propValue)) {
-                    json[thisProp] = _propValue.map((item: any) => item.json)
-                } else if (new _propType() instanceof BaseModel) {
-                    // @ts-ignore
-                    json[thisProp] = _propValue.json
-                } else {
-                    json[thisProp] = _propValue
-                }
-            } else {
-                json[thisProp] = _propValue
-            }
-        }
-
-        return json
     }
 
     async load() {

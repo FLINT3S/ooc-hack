@@ -4,7 +4,7 @@ type ColumnOptions = {
     type?: any,
     excludeFromJSON?: boolean,
     jsonKey?: string,
-    extractMethod?: 'strapi' | undefined | null
+    extractMethod?: 'strapi' | 'strapi-array' | undefined | null
 }
 
 export const Column = (options: ColumnOptions = {}): PropertyDecorator => {

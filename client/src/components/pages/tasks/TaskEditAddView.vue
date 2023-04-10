@@ -6,10 +6,13 @@
 
         <div class="row mt-5">
             <div class="col-8">
-                <tasks-fields-view
-                        :mode="mode"
-                        :task-item="taskItem"
-                />
+                <n-spin :show="loading">
+                    <tasks-fields-view
+                            :mode="mode"
+                            :task-item="taskItem"
+                            @add-section="onClickAddSection"
+                    />
+                </n-spin>
             </div>
             <div class="col-1"></div>
             <div class="col-3 position-relative">
@@ -72,7 +75,7 @@
                                     block
                                     class="justify-content-start opacity-75 mt-4"
                                     size="medium" text
-                                    @click="addSection"
+                                    @click="onClickAddSection"
                             >
                                 <template #icon>
                                     <svg fill="none" height="14" style="" viewBox="0 0 14 14" width="14"
@@ -106,6 +109,8 @@ import {Task} from "@data/models/Task";
 
 import ReturnToHomeBtn from "@components/ui/widgets/ReturnToHomeBtn.vue";
 import TasksFieldsView from "@pages/tasks/TasksFieldsView.vue";
+import {TaskHistory} from "@data/models/TaskHistory";
+import {useRootStore} from "@data/store/rootStore";
 
 const router = useRouter()
 const dialog = useDialog()
@@ -117,6 +122,7 @@ const mode = computed(() => {
 
 const loading = ref(false)
 const taskItem: Task = reactive(new Task()) as Task
+const rootStore = useRootStore()
 
 if (mode.value === 'edit') {
     taskItem.id = parseInt(router.currentRoute.value.params.id as string) as number
@@ -130,7 +136,7 @@ const goToSection = (id: string) => {
     })
 }
 
-const addSection = () => {
+const onClickAddSection = () => {
     if (!taskItem.additionalFields) {
         taskItem.additionalFields = []
     }
@@ -169,9 +175,9 @@ const allSections = computed(() => {
     }))]
 })
 
-const onClickSaveTask = () => {
+const onClickSaveTask = async () => {
     if (mode.value === 'edit') {
-        taskItem.update().then(() => {
+        taskItem.update().then(async () => {
             dialog.success({
                 title: 'Обновлено!',
                 content: 'Объект успешно обновлен! Вернуться в реестр или продолжить редактирование?',
@@ -181,12 +187,19 @@ const onClickSaveTask = () => {
                     router.push('/tasks')
                 }
             })
+
+            const th = new TaskHistory()
+            th.task = taskItem.id as number
+            th.description = `Пользователь ${rootStore.currentUser.fullName} внёс изменения в решение`
+            th.client = rootStore.currentUser
+            await th.create()
         })
     } else {
-        taskItem.create().then((r) => {
-            console.log(r)
+        taskItem.create().then(async (r) => {
+            taskItem.id = r.id
+            await taskItem.load()
+            await router.replace('/tasks/edit/' + r.id)
             message.success("Объект создан")
-            router.replace('/tasks/edit/' + r.id)
         })
     }
 }
