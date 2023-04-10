@@ -61,6 +61,20 @@ services:
     depends_on:
       - strapi-service
 
+  notifications:
+    container_name: notifications
+    image: philipoff/ooc-hack-notifications:latest
+    restart: always
+    ports:
+      - "3002:3002"
+    environment:
+      STRAPI_URL:
+      STRAPI_LOGIN:
+      STRAPI_PASSWORD:
+      API_TOKEN:
+    depends_on:
+      - server
+
 
 volumes:
   strapi-data:

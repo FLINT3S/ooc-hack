@@ -4,8 +4,7 @@ from fastapi import APIRouter, Request
 notifications_router = APIRouter()
 
 
-base_url = "https://32a1-185-26-73-71.ngrok-free.app"
-
+base_url = "http://ooc.flint3s.ru"
 
 @notifications_router.post("/new_notification")
 async def new_meeting(request: Request):

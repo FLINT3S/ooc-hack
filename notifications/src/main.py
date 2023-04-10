@@ -11,6 +11,7 @@ from urllib.parse import unquote
 
 from .database import get_meeting, get_users_from_working_group, get_task, create_notification
 from notifications.src.telegram_bot.bot import bot
+from aiogram.utils.exceptions import ChatIdIsEmpty
 
 app = FastAPI()
 
@@ -48,13 +49,32 @@ async def root(data=Body()):
                            f"\nСсылка для подключения: {meeting_url}"
                     await create_notification({
                         "workGroup": work_group,
-                        "title": "Новая встреча!",
+                        "title": "New meeting",
                         "text": text,
                         "date": datetime.now().strftime('%d.%m.%y в %H:%M'),
                         "sent": True
                     })
                     for client in work_group["attributes"]["clients"]["data"]: # Send message in Telegram
                         await bot.send_message(client["attributes"]["telegramId"], text)
+    elif data["model"] == "task" and data["event"] == "entry.update":
+        text = f"Обновлён статус решения \"{data['entry']['title']}\" на \"{data['entry']['status']}\""
+        task = await get_task(data["entry"]["id"])
+        if task["attributes"]["workGroups"]["data"]:
+            for work_group in task["attributes"]["workGroups"]["data"]:
+                work_group = await get_users_from_working_group(work_group["id"])
+                await create_notification({
+                    "workGroup": work_group,
+                    "title": "Task status changed",
+                    "text": text,
+                    "date": datetime.now().strftime('%d.%m.%y в %H:%M'),
+                    "sent": True
+                })
+                for client in work_group["attributes"]["clients"]["data"]:  # Send message in Telegram
+                    try:
+                        await bot.send_message(client["attributes"]["telegramId"], text)
+                    except ChatIdIsEmpty as e:
+                        print("У пользователя нет telegramId")
+                        print(e)
 
 
 if __name__ == "__main__":
