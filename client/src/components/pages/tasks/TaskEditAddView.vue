@@ -186,10 +186,11 @@ const onClickSaveTask = () => {
             })
         })
     } else {
-        taskItem.create().then((r) => {
-            console.log(r)
+        taskItem.create().then(async (r) => {
+            taskItem.id = r.id
+            await taskItem.load()
+            await router.replace('/tasks/edit/' + r.id)
             message.success("Объект создан")
-            router.replace('/tasks/edit/' + r.id)
         })
     }
 }

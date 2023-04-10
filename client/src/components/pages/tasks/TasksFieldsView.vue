@@ -12,25 +12,30 @@
             <div class="row">
                 <div class="col-5">Статус</div>
                 <div class="col-7">
-                    <task-status :status="taskItem.status"/>
+                    <n-popselect v-model:value="taskItem.status" :options="taskStatusOptions">
+                        <task-status :status="taskItem.status"/>
+                    </n-popselect>
                 </div>
             </div>
 
             <n-divider/>
 
             <div class="row">
-                <div class="col-5">Срок</div>
-                <div class="col-7">
-                    {{ taskItem.createdAt?.toLocaleDateString() }} - {{ taskItem.deadline?.toLocaleDateString() }}
+                <div class="col-5 d-flex"><span class="my-auto">Срок</span></div>
+                <div class="col-7 d-flex">
+                    <div>
+                        <n-date-picker v-model:value="dateRange" clearable type="daterange"
+                                       @blur="settings.editDate = false"/>
+                    </div>
                 </div>
             </div>
 
-            <n-divider/>
+            <n-divider v-if="mode === 'edit'"/>
 
-            <div class="row">
+            <div v-if="mode === 'edit'" class="row">
                 <div class="col-5">Ближайшее совещание</div>
-                <div class="col-7">
-                    <n-button secondary size="small">
+                <div v-if="!taskItem.nearestMeeting" class="col-7">
+                    <n-button secondary size="small" @click="onClickPlanMeeting">
                         <template #icon>
                             <svg fill="none" height="20" style="" viewBox="0 0 20 20" width="20"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +46,12 @@
 
                         Запланировать совещание
                     </n-button>
+                </div>
+                <div v-else class="col-7">
+                    {{ getDateTime(new Date(taskItem.nearestMeeting.date)) }}
+                    <br>
+                    <a :href="taskItem.nearestMeeting.url" class="underline-hover-link text-accent"
+                       target="_blank">{{ taskItem.nearestMeeting.url }}</a>
                 </div>
             </div>
         </n-card>
@@ -60,14 +71,15 @@
                     <n-select v-model:value="assignee" :options="assigneeOptions" filterable></n-select>
                 </n-form-item>
                 <n-form-item label="Объект недвижимости">
-                    <n-input :readonly="mode === 'edit'" :value="taskItem?.realEstate?.address"/>
+                    <n-input v-if="mode === 'edit'" :readonly="mode === 'edit'" :value="taskItem?.realEstate?.address"/>
+                    <n-select filterable v-else v-model:value="realty" :options="realtyOptions"></n-select>
                 </n-form-item>
             </n-form>
         </section>
 
-        <documents-section :item="taskItem" @upload="onFilesUpload"/>
+        <documents-section v-if="mode === 'edit'" :item="taskItem" @upload="onFilesUpload"/>
 
-        <section id="history" class="mt-4 mb-4">
+        <section v-if="mode === 'edit'" id="history" class="mt-4 mb-4">
             <h3 class="section-title mb-3">История изменений</h3>
 
             <n-list>
@@ -89,6 +101,12 @@
                 Добавить новый раздел
             </n-button>
         </div>
+
+        <n-modal :show="settings.showMeetingModal" preset="card" style="width: 550px;"
+                 title="Планирование видеоконференции" @close="settings.showMeetingModal = false">
+            <n-date-picker v-model:value="settings.planMeetingDate" type="datetime"/>
+            <n-button block class="mt-3" type="primary" @click="onClickConformMeeting">Запланировать</n-button>
+        </n-modal>
     </div>
 </template>
 
@@ -106,6 +124,8 @@ import {TaskHistory} from "@data/models/TaskHistory";
 import {useRootStore} from "@data/store/rootStore";
 import {getDateTime} from "@data/utils/dateFormatter";
 import CustomFieldsSection from "@components/ui/realty/CustomFieldsSection.vue";
+import {useRealtyStore} from "@data/store/realtyStore";
+import {Realty} from "@data/models/Realty";
 
 const props = defineProps<{
     mode: 'edit' | 'add',
@@ -119,13 +139,92 @@ const router = useRouter()
 const message = useMessage()
 const dialog = useDialog()
 
+const taskStatusOptions = [
+    {
+        label: 'Ожидает',
+        value: 'pending'
+    },
+    {
+        label: 'В работе',
+        value: 'in_progress'
+    },
+    {
+        label: 'На проверке',
+        value: 'review'
+    },
+    {
+        label: 'Требуется уточнение',
+        value: 'need_correction'
+    },
+    {
+        label: 'Завершено',
+        value: 'done'
+    }
+]
+
+const settings = reactive({
+    editDate: false,
+    showMeetingModal: false,
+    planMeetingDate: new Date().getTime()
+})
 const workGroupStore = useWorkGroupStore()
 const clientStore = useClientStore()
 const rootStore = useRootStore()
+const realtyStore = useRealtyStore()
 
 const workGroupsOptions = computed(() => {
     return workGroupStore.workGroups.map(wg => ({label: wg.title, value: wg.id}))
 })
+
+const realty = computed({
+    get() {
+        return props.taskItem?.realEstate?.id
+    },
+    set(rid: number) {
+        props.taskItem.realEstate = new Realty(rid)
+    },
+})
+
+const realtyOptions = computed(() => {
+    return realtyStore.realtyRegistry.map((r: any) => ({value: r.id, label: r.address}))
+})
+
+const dateRange = computed({
+    get(): [number, number] {
+        return [
+            props.taskItem.createdAt?.getTime() || new Date().getTime(),
+            props.taskItem.deadline?.getTime() || new Date().getTime()
+        ]
+    },
+    set(dateRange: [number, number]) {
+        props.taskItem.createdAt = new Date(dateRange[0])
+        props.taskItem.deadline = new Date(dateRange[1])
+    },
+})
+
+const onClickPlanMeeting = () => {
+    settings.showMeetingModal = true
+}
+
+const onClickConformMeeting = () => {
+    strapiApi.post('/meetings', {
+        data: {
+            tasks: [props.taskItem.id],
+            url: 'https://meet.jit.si/gin-task-' + props.taskItem.id + '-' + settings.planMeetingDate,
+            date: new Date(settings.planMeetingDate)
+        }
+    }).then((r) => {
+        dialog.success({
+            title: 'ВКС запланирована!',
+            content: `Встреча по задаче запланирована на ${getDateTime(new Date(settings.planMeetingDate))}. Ссылка для подключения: ${'https://meet.jit.si/gin-task-' + props.taskItem.id + '-' + settings.planMeetingDate}`,
+            positiveText: 'Закрыть',
+            onPositiveClick: () => {
+                settings.showMeetingModal = false
+                props.taskItem.load()
+            }
+        })
+    })
+}
 
 const workGroups = computed({
     get(): number[] {
@@ -166,7 +265,7 @@ const onFilesUpload = async (attachments: any) => {
 }
 
 const initData = () => {
-    withLoading(Promise.all([workGroupStore.loadAllWorkGroups(), clientStore.loadAllClients()]))
+    withLoading(Promise.all([workGroupStore.loadAllWorkGroups(), clientStore.loadAllClients(), realtyStore.loadAllRealty(0)]))
 }
 
 initData()

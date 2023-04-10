@@ -12,7 +12,7 @@ services:
 
   strapi-service:
     container_name: strapi-service
-    image: siailyadev/ooc-hack-strapi-service:0.0.7
+    image: siailyadev/ooc-hack-strapi-service:0.0.8
     environment:
       HOST:
       PORT:

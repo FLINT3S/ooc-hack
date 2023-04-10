@@ -227,10 +227,11 @@ const onClickSaveRealty = () => {
             })
         })
     } else {
-        realtyItem.create().then((r) => {
-            console.log(r)
+        realtyItem.create().then(async (r) => {
             message.success("Объект создан")
-            router.replace('/realty/edit/' + r.id)
+            realtyItem.id = r.id
+            await realtyItem.load()
+            await router.replace('/realty/edit/' + r.id)
         })
     }
 }
