@@ -60,15 +60,24 @@
                     <n-select v-model:value="assignee" :options="assigneeOptions" filterable></n-select>
                 </n-form-item>
                 <n-form-item label="Объект недвижимости">
-                    <n-input :value="taskItem?.realEstate?.address"/>
+                    <n-input :readonly="mode === 'edit'" :value="taskItem?.realEstate?.address"/>
                 </n-form-item>
             </n-form>
         </section>
 
-        <documents-section @upload="onFilesUpload" :item="taskItem"/>
+        <documents-section :item="taskItem" @upload="onFilesUpload"/>
 
-        <section id="history">
+        <section id="history" class="mt-4">
+            <h3 class="section-title mb-3">История изменений</h3>
 
+            <n-list>
+                <n-list-item v-for="history in taskItem.taskHistories">
+                    <div class="row">
+                        <div class="col-9">{{ history['description'] }}</div>
+                        <div class="col-3">{{ getDateTime(history['createdAt']) }}</div>
+                    </div>
+                </n-list-item>
+            </n-list>
         </section>
     </div>
 </template>
@@ -83,6 +92,9 @@ import {useClientStore} from "@data/store/clientStore";
 import {Client} from "@data/models/Client";
 import DocumentsSection from "@components/ui/widgets/DocumentsSection.vue";
 import {strapiApi} from "@/app/api/api";
+import {TaskHistory} from "@data/models/TaskHistory";
+import {useRootStore} from "@data/store/rootStore";
+import {getDateTime} from "@data/utils/dateFormatter";
 
 const props = defineProps<{
     mode: 'edit' | 'add',
@@ -96,6 +108,7 @@ const dialog = useDialog()
 
 const workGroupStore = useWorkGroupStore()
 const clientStore = useClientStore()
+const rootStore = useRootStore()
 
 const workGroupsOptions = computed(() => {
     return workGroupStore.workGroups.map(wg => ({label: wg.title, value: wg.id}))
@@ -127,9 +140,16 @@ const assignee = computed({
     },
 })
 
-const onFilesUpload = (attachments: any) => {
-    strapiApi.put(`/tasks/${props.taskItem.id}`, {data: {attachments: [...(props.taskItem?.attachments ? props.taskItem.attachments.map((a: any) => a.id) : []), ...attachments.map((a : any) => a.id)]}})
-    props.taskItem.load()
+const onFilesUpload = async (attachments: any) => {
+    await strapiApi.put(`/tasks/${props.taskItem.id}`, {data: {attachments: [...(props.taskItem?.attachments ? props.taskItem.attachments.map((a: any) => a.id) : []), ...attachments.map((a: any) => a.id)]}})
+
+    const th = new TaskHistory()
+    th.task = props.taskItem.id as number
+    th.description = `Пользователем ${rootStore.currentUser.fullName} загружены файлы: ` + attachments.map((a: any) => a.name).join(', ')
+    th.client = rootStore.currentUser
+    await th.create()
+
+    await props.taskItem.load()
 }
 
 const initData = () => {

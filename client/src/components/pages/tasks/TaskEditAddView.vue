@@ -6,10 +6,12 @@
 
         <div class="row mt-5">
             <div class="col-8">
-                <tasks-fields-view
-                        :mode="mode"
-                        :task-item="taskItem"
-                />
+                <n-spin :show="loading">
+                    <tasks-fields-view
+                            :mode="mode"
+                            :task-item="taskItem"
+                    />
+                </n-spin>
             </div>
             <div class="col-1"></div>
             <div class="col-3 position-relative">

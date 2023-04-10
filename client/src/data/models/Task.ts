@@ -4,6 +4,7 @@ import {Column} from "../decorators/Column";
 import {API} from "@data/models/common/api/API";
 import {AdditionalModelFields} from "@data/types/additionalModelFields";
 import {WorkGroup} from "@data/models/WorkGroup";
+import {TaskHistory} from "@data/models/TaskHistory";
 
 @Entity()
 export class Task extends BaseModel {
@@ -35,6 +36,9 @@ export class Task extends BaseModel {
 
     @Column({extractMethod: 'strapi-array'})
     attachments: any
+
+    @Column({type: [TaskHistory]})
+    taskHistories: TaskHistory[] = []
 
     validate() {
         return !!(this.deadline &&

@@ -135,7 +135,8 @@ const filesColumns = [
                 'a',
                 {
                     href: strapiApi.defaults.baseURL!.slice(0, -4) + row.url,
-                    className: 'underline-hover-link text-accent'
+                    className: 'underline-hover-link text-accent',
+                    target: '_blank'
                 },
                 {default: () => 'Скачать'}
             )
