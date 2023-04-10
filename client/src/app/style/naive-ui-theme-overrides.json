@@ -2,8 +2,10 @@
   "common": {
     "primaryColor": "#B91827FF",
     "primaryColorHover": "#86111CFF",
+    "primaryColorPressed": "#86111CFF",
     "borderRadius": "10px",
-    "fontSizeMedium": "16px"
+    "fontSizeMedium": "16px",
+    "primaryColorSuppl": "#BC1C2BFF"
   },
   "Button": {
     "paddingMedium": "24px 30px",
@@ -24,7 +26,7 @@
   "Table": {},
   "DataTable": {
     "paginationMargin": "20px 0 0 0",
-    "tdPaddingMedium": "28px"
+    "tdPaddingMedium": "12px"
   },
   "Checkbox": {
     "borderRadius": "4px"

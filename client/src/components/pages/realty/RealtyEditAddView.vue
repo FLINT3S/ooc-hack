@@ -14,6 +14,9 @@
                         @recognize="recognizeAddress"
                         @add-section="addSection"
                 />
+                <realty-tasks-view
+                        :realty-item="realtyItem"
+                />
             </div>
             <div class="col-1"></div>
             <div class="col-3 position-relative">
@@ -97,9 +100,13 @@
                         </n-card>
                     </n-spin>
 
-                    <n-button :disabled="isSaveBtnDisabled" :loading="loading" block class="mt-3" type="primary"
+                    <n-button v-if="view === 'realty'" :disabled="isSaveBtnDisabled" :loading="loading" block class="mt-3" type="primary"
                               @click="onClickSaveRealty">
                         {{ mode === 'edit' ? 'Сохранить изменения' : 'Создать объект' }}
+                    </n-button>
+                    <n-button v-else  block class="mt-3" type="primary"
+                              @click="router.push('/tasks/add')">
+                        Добавить решение
                     </n-button>
                 </div>
             </div>
@@ -115,6 +122,7 @@ import {useSetLoading} from "@data/hooks/useSetLoading";
 import RealtyFieldsView from "@pages/realty/RealtyFieldsView.vue";
 import {serverApi} from "@/app/api/api";
 import {makeSectionId} from "@data/utils/transliterate";
+import RealtyTasksView from "@pages/realty/RealtyTasksView.vue";
 
 const router = useRouter()
 const dialog = useDialog()

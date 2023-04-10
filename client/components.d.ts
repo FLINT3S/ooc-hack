@@ -65,6 +65,7 @@ declare module '@vue/runtime-core' {
     RealtyFieldsView: typeof import('./src/components/pages/realty/RealtyFieldsView.vue')['default']
     RealtyRegistryView: typeof import('./src/components/pages/realty/RealtyRegistryView.vue')['default']
     RealtySection: typeof import('./src/components/ui/realty/RealtySection.vue')['default']
+    RealtyTasksView: typeof import('./src/components/pages/realty/RealtyTasksView.vue')['default']
     ReturnToHomeBtn: typeof import('./src/components/ui/widgets/ReturnToHomeBtn.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
