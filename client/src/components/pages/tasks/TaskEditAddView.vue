@@ -177,7 +177,7 @@ const allSections = computed(() => {
 
 const onClickSaveTask = async () => {
     if (mode.value === 'edit') {
-        taskItem.update().then(() => {
+        taskItem.update().then(async () => {
             dialog.success({
                 title: 'Обновлено!',
                 content: 'Объект успешно обновлен! Вернуться в реестр или продолжить редактирование?',
