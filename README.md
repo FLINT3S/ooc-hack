@@ -10,8 +10,7 @@
 * ### Vue3 + naiveUI (Client)
 * ### aiogram + strapi (Notifications)
 
+Каждый раздел вынесен в отдельный сервис
+
 <hr>
-
-Проект имеет микросервисную архитектуру
-
-Решение было реализовано в рамках хакатона Optimize & Organize Challenge
+Решение было реализовано в рамках хакатона Optimize & Organize Challenge командой flint3s
