@@ -17,7 +17,7 @@
             <n-card>
                 <h3 v-if="events.tasks" class="fw-normal mb-2">Решения</h3>
                 <router-link v-for="t in events.tasks" :to="'/tasks/edit/' + t.id"
-                             class="underline-hover-link text-accent">
+                             class="underline-hover-link text-accent d-block mb-1">
                     {{ t.title }}
                 </router-link>
 
@@ -25,7 +25,7 @@
 
                 <h3 v-if="events.meetings" class="fw-normal mb-2">Встречи</h3>
                 <router-link v-for="m in events.meetings" :to="'/tasks/edit/' + m?.tasks?.[0]?.id"
-                             class="underline-hover-link text-accent">
+                             class="underline-hover-link text-accent d-block mb-3">
                     {{ getDateTime(m?.date) }} - Встреча по задаче "{{ m?.tasks?.[0]?.title }}"
                 </router-link>
             </n-card>
