@@ -11,6 +11,7 @@ from urllib.parse import unquote
 
 from .database import get_meeting, get_users_from_working_group, get_task, create_notification
 from notifications.src.telegram_bot.bot import bot
+from aiogram.utils.exceptions import ChatIdIsEmpty
 
 app = FastAPI()
 
@@ -69,7 +70,11 @@ async def root(data=Body()):
                     "sent": True
                 })
                 for client in work_group["attributes"]["clients"]["data"]:  # Send message in Telegram
-                    await bot.send_message(client["attributes"]["telegramId"], text)
+                    try:
+                        await bot.send_message(client["attributes"]["telegramId"], text)
+                    except ChatIdIsEmpty as e:
+                        print("У пользователя нет telegramId")
+                        print(e)
 
 
 if __name__ == "__main__":
