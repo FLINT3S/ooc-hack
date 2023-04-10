@@ -74,7 +74,6 @@ async def start(message: types.Message):
 @dp.message_handler(state=Form.email)
 async def process_name(message: types.Message, state: FSMContext):
     users = await update_users()
-    print(users)
     for user in users:
         if user["attributes"]["email"] == message.text:
             async with state.proxy() as data:
