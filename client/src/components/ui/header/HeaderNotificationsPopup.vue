@@ -19,7 +19,7 @@
 
                         <template #footer>
                         <span style="color: var(--text-secondary)">
-                            {{ notif.date }}
+                            {{ getDateTime(notif.createdAt) }}
                         </span>
                         </template>
                     </n-thing>
@@ -32,6 +32,7 @@
 <script lang="ts" setup>
 import {NotificationsOutlined} from "@vicons/material";
 import {useNotificationStore} from "@data/store/notificationStore";
+import {getDateTime} from "@data/utils/dateFormatter";
 
 const notificationStore = useNotificationStore()
 notificationStore.loadAllNotifications()

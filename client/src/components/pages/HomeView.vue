@@ -17,7 +17,7 @@
                                     {{ notification.text }}
                                 </span>
                                 <span>
-                                    {{ notification.date }}
+                                    {{ getDateTime(notification.createdAt) }}
                                 </span>
                             </div>
                         </n-list-item>
@@ -67,6 +67,7 @@ import SearchPanel from "@components/ui/search/SearchPanel.vue";
 import ArrowRightIcon from "@components/ui/icons/ArrowRightIcon.vue";
 import {useNotificationStore} from "@data/store/notificationStore";
 import Calendar from "@pages/Calendar.vue";
+import {getDateTime} from "@data/utils/dateFormatter";
 
 const notificationStore = useNotificationStore()
 notificationStore.loadAllNotifications()
