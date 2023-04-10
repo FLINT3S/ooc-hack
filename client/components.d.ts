@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     HeaderNotificationsPopup: typeof import('./src/components/ui/header/HeaderNotificationsPopup.vue')['default']
     HeaderUserPopup: typeof import('./src/components/ui/header/HeaderUserPopup.vue')['default']
     HomeView: typeof import('./src/components/pages/HomeView.vue')['default']
+    LogoutView: typeof import('./src/components/pages/LogoutView.vue')['default']
     MainLayout: typeof import('./src/components/layout/MainLayout.vue')['default']
     NBadge: typeof import('naive-ui')['NBadge']
     NButton: typeof import('naive-ui')['NButton']
@@ -33,8 +34,6 @@ declare module '@vue/runtime-core' {
     NDivider: typeof import('naive-ui')['NDivider']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
-    NFormItemGi: typeof import('naive-ui')['NFormItemGi']
-    NGrid: typeof import('naive-ui')['NGrid']
     NIcon: typeof import('naive-ui')['NIcon']
     NInput: typeof import('naive-ui')['NInput']
     NInputNumber: typeof import('naive-ui')['NInputNumber']
@@ -76,5 +75,6 @@ declare module '@vue/runtime-core' {
     TaskStatus: typeof import('./src/components/ui/tasks/TaskStatus.vue')['default']
     UpcomingEvents: typeof import('./src/components/ui/widgets/UpcomingEvents.vue')['default']
     UserIcon: typeof import('./src/components/ui/icons/UserIcon.vue')['default']
+    WorkGroupsView: typeof import('./src/components/pages/WorkGroupsView.vue')['default']
   }
 }

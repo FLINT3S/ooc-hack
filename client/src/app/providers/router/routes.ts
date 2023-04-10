@@ -12,8 +12,19 @@ export const routes: RouteRecordRaw[] = [
         props: true
     },
     {
+        path: '/logout',
+        component: () => import("@pages/LogoutView.vue"),
+    },
+    {
         path: '/',
         component: () => import('@pages/HomeView.vue'),
+        meta: {
+            layout: MainLayout
+        }
+    },
+    {
+        path: '/workGroups',
+        component: () => import('@pages/WorkGroupsView.vue'),
         meta: {
             layout: MainLayout
         }

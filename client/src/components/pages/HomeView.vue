@@ -10,14 +10,14 @@
             </section>
             <section class="mt-5">
                 <n-card size="medium">
-                    <n-list clickable hoverable>
-                        <n-list-item v-for="i in 3">
+                    <n-list hoverable>
+                        <n-list-item v-for="notification in notificationStore.notifications.slice(0, 4)">
                             <div class="d-flex justify-content-between">
                                 <span>
-                                    Изменён статус объекта “г. Москва, ул. Беловежская, вл.4” на Завершено
+                                    {{ notification.text }}
                                 </span>
                                 <span>
-                                    05.04.23 08:10
+                                    {{ notification.date }}
                                 </span>
                             </div>
                         </n-list-item>
@@ -25,7 +25,7 @@
                 </n-card>
 
                 <router-link class="mt-3 d-flex align-items-center text-accent text-decoration-none" to="/tasks">
-                    <span class="me-2">Все уведомления</span>
+                    <span class="me-2">Все решения</span>
                     <ArrowRightIcon/>
                 </router-link>
             </section>
@@ -45,10 +45,10 @@
                     </div>
                 </n-card>
             </section>
-
-            <section class="mt-5">
-                <UpcomingEvents/>
-            </section>
+            <router-link class="mt-3 d-flex align-items-center text-accent text-decoration-none" to="/analytics">
+                <span class="me-2">Календарь и аналитика</span>
+                <ArrowRightIcon/>
+            </router-link>
         </div>
     </div>
 </template>
@@ -57,7 +57,10 @@
 import SearchPanel from "@components/ui/search/SearchPanel.vue";
 import DashboardNumber from "@components/ui/widgets/DashboardNumber.vue";
 import ArrowRightIcon from "@components/ui/icons/ArrowRightIcon.vue";
-import UpcomingEvents from "@components/ui/widgets/UpcomingEvents.vue";
+import {useNotificationStore} from "@data/store/notificationStore";
+
+const notificationStore = useNotificationStore()
+notificationStore.loadAllNotifications()
 </script>
 
 <style scoped>

@@ -120,7 +120,8 @@ let rawRealtyColumns: DataTableColumns = [
     },
     {
         title: 'ИД',
-        key: 'id'
+        key: 'id',
+        width: 50
     },
     {
         title: 'Адрес',

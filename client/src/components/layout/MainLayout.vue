@@ -2,7 +2,7 @@
     <n-layout>
         <n-layout-header bordered>
             <section class="container py-2 d-flex justify-content-between align-items-center">
-                <router-link to="/" class="d-flex text-decoration-none">
+                <router-link class="d-flex text-decoration-none" to="/">
                     <img alt="" height="35" src="@/assets/images/gin-logo.svg">
                     <div class="text-center my-auto lh-1 ms-2">
                         <h1 class="app-title my-0">
@@ -20,6 +20,10 @@
                         <NotesRound width="24"/>
                     </header-navigation-item>
 
+                    <header-navigation-item title="Рабочие группы" to="/workGroups">
+                        <WorkOutlineFilled width="24"/>
+                    </header-navigation-item>
+
                     <header-navigation-item title="Дашборд" to="/">
                         <InsertChartOutlined width="24"/>
                     </header-navigation-item>
@@ -35,7 +39,7 @@
 
         <n-scrollbar style="height: calc(100vh - 52px)">
             <n-layout-content style="height: 100%">
-                <main style="min-height: calc(100vh - 83px)" class="pb-3">
+                <main class="pb-3" style="min-height: calc(100vh - 83px)">
                     <slot></slot>
                 </main>
             </n-layout-content>
@@ -56,7 +60,7 @@ import {useRootStore} from "@data/store/rootStore";
 import HeaderNavigationItem from "@components/ui/header/HeaderNavigationItem.vue";
 import HeaderNotificationsPopup from "@components/ui/header/HeaderNotificationsPopup.vue";
 import HeaderUserPopup from "@components/ui/header/HeaderUserPopup.vue";
-import {HomeWorkOutlined, InsertChartOutlined, NotesRound} from "@vicons/material"
+import {HomeWorkOutlined, InsertChartOutlined, NotesRound, WorkOutlineFilled} from "@vicons/material"
 
 const root = useRootStore()
 

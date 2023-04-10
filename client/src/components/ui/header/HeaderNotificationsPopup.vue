@@ -6,20 +6,20 @@
             :show-arrow="false"
     >
         <template #trigger>
-            <n-badge :offset="[-5, 5]" :show="unread" dot>
+            <n-badge :offset="[-19, 5]" :show="true" dot>
                 <NotificationsOutlined class="header-icon me-3" width="26"/>
             </n-badge>
         </template>
 
         <n-scrollbar style="max-height: 300px">
             <n-list>
-                <n-list-item v-for="_ in 5">
+                <n-list-item v-for="notif in notificationStore.notifications">
                     <n-thing>
-                        Изменён статус объекта “г. Москва, ул. Беловежская, вл.4” на Завершено
+                        {{ notif.text }}
 
                         <template #footer>
                         <span style="color: var(--text-secondary)">
-                            05.04.23 08:10
+                            {{ notif.date }}
                         </span>
                         </template>
                     </n-thing>
@@ -31,6 +31,10 @@
 
 <script lang="ts" setup>
 import {NotificationsOutlined} from "@vicons/material";
+import {useNotificationStore} from "@data/store/notificationStore";
+
+const notificationStore = useNotificationStore()
+notificationStore.loadAllNotifications()
 
 interface Props {
     unread?: boolean
