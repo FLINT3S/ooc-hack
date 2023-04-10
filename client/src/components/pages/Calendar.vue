@@ -56,13 +56,13 @@ const handleUpdateValue = (time: number, {year, month, date}: { year: number; mo
 
 const getTasksByDate = (year: number, month: number, day: number) => {
     return taskStore.tasksRegistry.filter(t => {
-        return t.deadline?.toLocaleDateString() === new Date(year, month, day).toLocaleDateString()
+        return t.deadline?.toLocaleDateString() === new Date(year, month - 1, day).toLocaleDateString()
     })
 }
 
 const getMeetingsByDate = (year: number, month: number, day: number) => {
     return meetingStore.meetings.filter(t => {
-        return t.date?.toLocaleDateString() === new Date(year, month, day).toLocaleDateString()
+        return t.date?.toLocaleDateString() === new Date(year, month - 1, day).toLocaleDateString()
     })
 }
 </script>
