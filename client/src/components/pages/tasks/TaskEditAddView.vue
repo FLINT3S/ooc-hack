@@ -20,12 +20,13 @@
                     <n-spin :show="loading">
                         <n-card id="nav_card" class="">
                             <n-button
+                                    v-if="mode === 'edit'"
                                     block
                                     class="justify-content-between"
                                     icon-placement="right"
                                     quaternary
                                     size="large"
-                                    @click=""
+                                    @click="router.push('/realty/edit/' + taskItem.realEstate.id)"
                             >
                                 Данные объекта
 
