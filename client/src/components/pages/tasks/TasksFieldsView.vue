@@ -72,7 +72,7 @@
                 </n-form-item>
                 <n-form-item label="Объект недвижимости">
                     <n-input v-if="mode === 'edit'" :readonly="mode === 'edit'" :value="taskItem?.realEstate?.address"/>
-                    <n-select filterable v-else v-model:value="realty" :options="realtyOptions"></n-select>
+                    <n-select v-else v-model:value="realty" :options="realtyOptions" filterable></n-select>
                 </n-form-item>
             </n-form>
         </section>
@@ -83,6 +83,13 @@
             <h3 class="section-title mb-3">История изменений</h3>
 
             <n-list>
+                <n-list-item>
+                    <div class="row">
+                        <div class="col-9">Решение создано</div>
+                        <div class="col-3">{{ getDateTime(props.taskItem.createdAt) }}</div>
+                    </div>
+                </n-list-item>
+
                 <n-list-item v-for="history in taskItem.taskHistories">
                     <div class="row">
                         <div class="col-9">{{ history['description'] }}</div>
@@ -191,6 +198,11 @@ const realtyOptions = computed(() => {
 
 const dateRange = computed({
     get(): [number, number] {
+        if (!props.taskItem.deadline) {
+            props.taskItem.deadline = new Date()
+            props.taskItem.createdAt = new Date()
+        }
+
         return [
             props.taskItem.createdAt?.getTime() || new Date().getTime(),
             props.taskItem.deadline?.getTime() || new Date().getTime()

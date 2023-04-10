@@ -109,6 +109,8 @@ import {Task} from "@data/models/Task";
 
 import ReturnToHomeBtn from "@components/ui/widgets/ReturnToHomeBtn.vue";
 import TasksFieldsView from "@pages/tasks/TasksFieldsView.vue";
+import {TaskHistory} from "@data/models/TaskHistory";
+import {useRootStore} from "@data/store/rootStore";
 
 const router = useRouter()
 const dialog = useDialog()
@@ -120,6 +122,7 @@ const mode = computed(() => {
 
 const loading = ref(false)
 const taskItem: Task = reactive(new Task()) as Task
+const rootStore = useRootStore()
 
 if (mode.value === 'edit') {
     taskItem.id = parseInt(router.currentRoute.value.params.id as string) as number
@@ -172,7 +175,7 @@ const allSections = computed(() => {
     }))]
 })
 
-const onClickSaveTask = () => {
+const onClickSaveTask = async () => {
     if (mode.value === 'edit') {
         taskItem.update().then(() => {
             dialog.success({
@@ -184,6 +187,12 @@ const onClickSaveTask = () => {
                     router.push('/tasks')
                 }
             })
+
+            const th = new TaskHistory()
+            th.task = taskItem.id as number
+            th.description = `Пользователь ${rootStore.currentUser.fullName} внёс изменения в решение`
+            th.client = rootStore.currentUser
+            await th.create()
         })
     } else {
         taskItem.create().then(async (r) => {
