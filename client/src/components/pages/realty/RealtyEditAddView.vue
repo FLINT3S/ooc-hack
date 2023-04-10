@@ -15,6 +15,7 @@
                         @add-section="addSection"
                 />
                 <realty-tasks-view
+                        v-else
                         :realty-item="realtyItem"
                 />
             </div>
@@ -100,11 +101,12 @@
                         </n-card>
                     </n-spin>
 
-                    <n-button v-if="view === 'realty'" :disabled="isSaveBtnDisabled" :loading="loading" block class="mt-3" type="primary"
+                    <n-button v-if="view === 'realty'" :disabled="isSaveBtnDisabled" :loading="loading" block
+                              class="mt-3" type="primary"
                               @click="onClickSaveRealty">
                         {{ mode === 'edit' ? 'Сохранить изменения' : 'Создать объект' }}
                     </n-button>
-                    <n-button v-else  block class="mt-3" type="primary"
+                    <n-button v-else block class="mt-3" type="primary"
                               @click="router.push('/tasks/add')">
                         Добавить решение
                     </n-button>
