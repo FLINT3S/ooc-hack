@@ -15,5 +15,5 @@ EXPOSE 3002
 
 #CMD ["python", "/code/notifications/src/telegram_bot/bot.py"]
 #CMD ["uvicorn", "notifications.src.main:app", "--host", "0.0.0.0", "--port", "3002", "--reload"]
-
-CMD notifications/tg_bot_and_fastapi.sh
+RUN ["chmod", "+x", "notifications/tg_bot_and_fastapi.sh"]
+ENTRYPOINT notifications/tg_bot_and_fastapi.sh
