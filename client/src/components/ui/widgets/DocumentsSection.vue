@@ -14,6 +14,13 @@
             Прикрепить файл
         </n-button>
 
+        <n-data-table
+            :columns="filesColumns"
+            :bordered="false" class="mt-3"
+            :data="documents"
+        >
+        </n-data-table>
+
         <n-modal
                 :show="settings.showUploadModal" preset="card" style="width: 500px" title="Загрузка документа"
                 @close="onClickUploadEnd"
@@ -60,17 +67,81 @@
 </template>
 
 <script lang="ts" setup>
-import {type UploadCustomRequestOptions} from "naive-ui"
+import {NP, type UploadCustomRequestOptions, NAvatar} from "naive-ui"
 import {strapiApi} from "@/app/api/api";
 import {AxiosProgressEvent} from "axios";
+import {RouterLink} from "vue-router";
+import {Realty} from "@data/models/Realty";
+import {Task} from "@data/models/Task";
 
 const message = useMessage()
 const emit = defineEmits(['upload'])
+
+const props = defineProps<{
+    item: Realty | Task
+}>()
 
 const settings = reactive({
     showUploadModal: false,
     uploadedFiles: [] as any[]
 })
+
+const documents = computed(() => {
+    if (!props.item?.attachments) {
+        return []
+    }
+
+    return props.item?.attachments
+})
+
+const filesColumns = [
+    {
+        title: 'Название',
+        key: 'name',
+        ellipsis: true
+    },
+    {
+        title: 'Загружен',
+        key: 'createdAt',
+        render(row: any) {
+            return h(
+                NP,
+                {},
+                {default: () => `${new Date(row.createdAt).toLocaleDateString()} ${new Date(row.createdAt).toLocaleTimeString()}`}
+            )
+        },
+        sorter: (row1: any, row2: any) => (new Date(row1.createdAt).getTime() - new Date(row2.createdAt).getTime())
+    },
+    {
+        title: 'Предпросмотр',
+        key: '',
+        render(row: any) {
+            if (['.png', '.jpg', 'jpeg'].includes(row.ext)) {
+                return h(
+                    NAvatar,
+                    {
+                        size: 48,
+                        src: strapiApi.defaults.baseURL!.slice(0, -4) + row.url
+                    }
+                )
+            }
+        },
+    },
+    {
+        title: 'Скачать',
+        key: '',
+        render(row: any) {
+            return h(
+                'a',
+                {
+                    href: strapiApi.defaults.baseURL!.slice(0, -4) + row.url,
+                    className: 'underline-hover-link text-accent'
+                },
+                {default: () => 'Скачать'}
+            )
+        },
+    }
+]
 
 const onClickUploadEnd = () => {
     emit('upload', settings.uploadedFiles)

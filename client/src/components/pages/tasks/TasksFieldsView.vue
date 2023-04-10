@@ -65,7 +65,7 @@
             </n-form>
         </section>
 
-        <documents-section @upload="onFilesUpload"/>
+        <documents-section @upload="onFilesUpload" :item="taskItem"/>
 
         <section id="history">
 
@@ -128,7 +128,6 @@ const assignee = computed({
 })
 
 const onFilesUpload = (attachments: any) => {
-    console.log(attachments)
     strapiApi.put(`/tasks/${props.taskItem.id}`, {data: {attachments: [...(props.taskItem?.attachments ? props.taskItem.attachments.map((a: any) => a.id) : []), ...attachments.map(a => a.id)]}})
     props.taskItem.load()
 }

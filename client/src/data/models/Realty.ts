@@ -47,6 +47,9 @@ export class Realty extends BaseModel {
     @Column({type: [WorkGroup]})
     workGroups: WorkGroup[] = []
 
+    @Column({extractMethod: 'strapi-array'})
+    attachments: any
+
     validate(): boolean {
         return !!(this.federalDistrict &&
             this.region &&
